@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le Phare — Ensemble contre le harcèlement</title>
+<meta name="description" content="Appli pour comprendre, réagir et se protéger face au harcèlement scolaire et au cyberharcèlement, avec un espace prof. Programme pHARe.">
+<meta name="theme-color" content="#EAF4FE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#3E3A5B; --muted:#7A7596;
+  --lav:#B9A3EC; --lav-l:#EFE8FC;
+  --peach:#FFB79E; --peach-l:#FFEDE5;
+  --mint:#8FD9BD; --mint-l:#E2F6EE;
+  --sky:#94C8F2; --sky-l:#E4F1FD;
+  --pink:#F4A3C0; --pink-l:#FDE8F0;
+  --butter:#FFD970; --butter-l:#FFF6D9;
+  --shadow:0 6px 22px rgba(90,80,140,.12);
+  --r:24px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);font-size:17px;line-height:1.5;
+  background:linear-gradient(180deg,#E4F1FD 0%,#FFF6F0 38%,#FDEFF6 100%);background-attachment:fixed;min-height:100vh}
+body.dys{font-family:'Lexend',sans-serif;letter-spacing:.04em;word-spacing:.12em;line-height:1.75}
+body.dys h1,body.dys h2,body.dys h3{font-family:'Lexend',sans-serif}
+h1,h2,h3{font-family:'Baloo 2','Nunito',sans-serif;line-height:1.15;margin:0}
+button{font-family:inherit;color:inherit;cursor:pointer;border:none;background:none;font-size:inherit}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:62px 16px 130px}
+body.proj .wrap{max-width:1100px}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(255,255,255,.75);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(185,163,236,.25)}
+.brand{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:7px}
+.exit{background:var(--ink);color:#fff;border-radius:999px;padding:7px 14px;font-weight:800;font-size:14px}
+.sos{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;
+  background:linear-gradient(135deg,#F7A1B5,#F27D8E);color:#fff;font-weight:800;font-size:17px;border-radius:999px;
+  padding:14px 26px;box-shadow:0 8px 24px rgba(242,125,142,.45);white-space:nowrap}
+body.proj .sos,body.profmode .sos{display:none}
+
+.hero{background:linear-gradient(180deg,#DCEBFB 0%,#F3E9FD 70%,#FFF 100%);border-radius:32px;padding:18px 18px 22px;box-shadow:var(--shadow);text-align:center}
+.hero h1{font-size:44px;font-weight:800}
+.tag{margin:4px 0 0;color:var(--muted);font-weight:700}
+.lh{width:230px;max-width:70%;height:auto;display:block;margin:0 auto}
+.ray{transition:opacity .9s ease}
+.ray.off{opacity:.07}
+.ray.on{opacity:.9;animation:glow 3.2s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.9}50%{opacity:.6}}
+.lantern-glow{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.9}50%{opacity:.55}}
+.stars circle{animation:tw 3s ease-in-out infinite}
+.stars circle:nth-child(2){animation-delay:.8s}.stars circle:nth-child(3){animation-delay:1.6s}.stars circle:nth-child(4){animation-delay:2.2s}
+@keyframes tw{0%,100%{opacity:.9}50%{opacity:.25}}
+.progress-pill{display:inline-flex;gap:10px;align-items:center;background:#fff;border-radius:999px;padding:7px 14px;margin-top:12px;font-weight:800;box-shadow:0 3px 10px rgba(90,80,140,.1);font-size:15px}
+.dots{display:inline-flex;gap:5px}
+.dots i{width:12px;height:12px;border-radius:50%;background:#E6E1F2;display:inline-block}
+.dots i.on{background:var(--butter);box-shadow:0 0 8px #FFD970}
+
+.section-title{font-size:24px;font-weight:800;margin:26px 4px 12px}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr}}
+.isle{display:flex;gap:14px;align-items:center;text-align:left;width:100%;padding:16px;border-radius:var(--r);background:#fff;box-shadow:var(--shadow);border:3px solid transparent;position:relative;transition:transform .15s}
+.isle:active{transform:scale(.98)}
+.isle .ico{flex:0 0 64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:34px}
+.isle h3{font-size:20px;font-weight:800}
+.isle p{margin:2px 0 0;font-size:14.5px;color:var(--muted);font-weight:600;line-height:1.35}
+.isle .num{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.isle .check{position:absolute;top:10px;right:12px;font-size:13px;font-weight:800;background:var(--butter);border-radius:999px;padding:2px 9px}
+.c1 .ico{background:var(--sky-l)} .c1{border-color:var(--sky-l)} .c1 .num{color:#4C8FC7}
+.c2 .ico{background:var(--peach-l)} .c2{border-color:var(--peach-l)} .c2 .num{color:#D9735A}
+.c3 .ico{background:var(--lav-l)} .c3{border-color:var(--lav-l)} .c3 .num{color:#8467CC}
+.c4 .ico{background:var(--mint-l)} .c4{border-color:var(--mint-l)} .c4 .num{color:#3E9E7C}
+.c5 .ico{background:var(--pink-l)} .c5{border-color:var(--pink-l)} .c5 .num{color:#CF5F88}
+.c6 .ico{background:var(--butter-l)} .c6{border-color:var(--butter-l)} .c6 .num{color:#A07A10}
+
+.card{background:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);margin:14px 0;position:relative}
+.card h3{font-size:21px;font-weight:800;margin-bottom:6px;padding-right:44px}
+.card p{margin:6px 0}
+.tint-sky{background:var(--sky-l)} .tint-peach{background:var(--peach-l)} .tint-lav{background:var(--lav-l)}
+.tint-mint{background:var(--mint-l)} .tint-pink{background:var(--pink-l)} .tint-butter{background:var(--butter-l)}
+.emoji-big{font-size:34px;line-height:1;margin-bottom:6px;display:block}
+ul.soft{padding-left:0;list-style:none;margin:8px 0}
+ul.soft li{padding:8px 12px;background:rgba(255,255,255,.78);border-radius:14px;margin:6px 0;font-weight:600}
+.signs{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+@media(min-width:560px){.signs{grid-template-columns:1fr 1fr 1fr}}
+.sign{background:#fff;border-radius:18px;padding:12px;text-align:center;font-weight:700}
+.sign b{display:block;font-size:28px}
+
+.say{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(90,80,140,.15);font-size:18px;display:flex;align-items:center;justify-content:center}
+.say.inline{position:static;display:inline-flex;vertical-align:middle;margin-left:6px}
+.say.speaking{background:var(--butter);animation:pulse 1.2s infinite}
+
+.mhead{border-radius:28px;padding:16px 18px 18px;box-shadow:var(--shadow);margin-bottom:6px}
+.back{background:#fff;border-radius:999px;padding:7px 14px;font-weight:800;font-size:14px;box-shadow:0 2px 8px rgba(90,80,140,.1)}
+.mhead h2{font-size:30px;font-weight:800;margin-top:12px}
+.mhead p{margin:4px 0 0;font-weight:600;opacity:.85}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:18px;padding:13px 18px;font-weight:800;background:var(--ink);color:#fff;box-shadow:0 4px 12px rgba(62,58,91,.2);min-height:48px;text-decoration:none}
+.btn.soft{background:#fff;color:var(--ink);border:2px solid #E6E1F2;box-shadow:none}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.4}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 140px}
+
+.choice{display:block;width:100%;text-align:left;background:#fff;border:3px solid #ECE7F7;border-radius:18px;padding:14px 16px;margin:10px 0;font-weight:700;line-height:1.4;transition:border-color .2s,background .2s}
+.choice.best{border-color:var(--mint);background:var(--mint-l)}
+.choice.mid{border-color:var(--butter);background:var(--butter-l)}
+.choice.bad{border-color:var(--pink);background:var(--pink-l)}
+.choice.dim{opacity:.55}
+.fb{border-radius:18px;padding:14px 16px;margin:12px 0;font-weight:600}
+.fb.good{background:var(--mint-l)} .fb.mid{background:var(--butter-l)} .fb.bad{background:var(--pink-l)}
+.fb b{display:block;font-family:'Baloo 2',sans-serif;font-size:19px;margin-bottom:2px}
+.persp{display:inline-block;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.p-temoin{background:var(--sky-l);color:#3F7FB5} .p-victime{background:var(--pink-l);color:#C2507A} .p-suiveur{background:var(--butter-l);color:#A07A10}
+.scene{font-size:18px;font-weight:700;background:var(--peach-l);border-radius:20px;padding:16px;padding-right:58px;margin:12px 0;position:relative}
+.scen-list .isle .ico{font-size:30px;flex-basis:54px;height:54px}
+
+.sortcard{background:#fff;border-radius:24px;padding:22px 52px 22px 18px;box-shadow:var(--shadow);font-size:18.5px;font-weight:700;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;position:relative}
+.bins{display:flex;gap:10px;margin-top:12px}
+.bins .btn{flex:1;font-size:15.5px;padding:14px 8px}
+.bin-a{background:#7FB8E6} .bin-b{background:#E98AA9}
+.counter{font-weight:800;color:var(--muted);font-size:14px;text-align:center;margin:8px 0}
+.bar{height:10px;background:#EEEAF7;border-radius:999px;overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sky),var(--lav));border-radius:999px;transition:width .4s}
+
+.gestes{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.gestes{grid-template-columns:1fr 1fr}}
+.geste{background:#fff;border-radius:20px;padding:14px 16px;box-shadow:var(--shadow)}
+.geste h3{font-size:19px;display:flex;align-items:center;gap:8px}
+.geste p{margin:4px 0 0;font-size:15.5px;font-weight:600;color:#4f4a6d}
+.netbtns{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip{border-radius:999px;padding:8px 14px;font-weight:800;font-size:14.5px;background:#fff;border:2px solid #E6E1F2}
+.chip.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tog{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border-radius:16px;padding:12px 14px;margin:8px 0;font-weight:700;border:2px solid #EEEAF7}
+.tog .box{flex:0 0 28px;height:28px;border-radius:9px;border:2px solid #CFC7E6;display:flex;align-items:center;justify-content:center;font-size:16px;background:#fff}
+.tog.on{border-color:var(--mint);background:var(--mint-l)}
+.tog.on .box{background:var(--mint);border-color:var(--mint);color:#fff}
+.shieldmeter{display:flex;align-items:center;gap:10px;font-weight:800}
+.seg{display:flex;background:#fff;border-radius:999px;padding:4px;gap:4px;box-shadow:var(--shadow);margin:8px 0 4px}
+.seg button{flex:1;border-radius:999px;padding:10px 8px;font-weight:800;font-size:14.5px}
+.seg button.sel{background:var(--lav);color:#fff}
+
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contact{background:#fff;border-radius:18px;padding:12px;text-align:center;box-shadow:var(--shadow);font-weight:700;font-size:15px}
+.contact b{display:block;font-size:30px;line-height:1.2}
+.contact span{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.quote{font-family:'Baloo 2',sans-serif;font-size:21px;font-weight:700;text-align:center;padding:6px 4px}
+
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch}
+.tabs .chip{white-space:nowrap}
+.moods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mood{background:#fff;border-radius:18px;padding:12px 6px;text-align:center;font-weight:800;font-size:14px;border:3px solid transparent;box-shadow:var(--shadow)}
+.mood b{display:block;font-size:36px;line-height:1.2}
+.mood.sel{border-color:var(--lav)}
+.breath-zone{display:flex;flex-direction:column;align-items:center;padding:10px 0}
+.bubble{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#C9E4FA 45%,#B9A3EC);display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px;transform:scale(.7);box-shadow:0 10px 30px rgba(148,200,242,.5);transition:transform 5s ease-in-out}
+.bubble.in{transform:scale(1.08)}
+.field{display:block;width:100%;font-family:inherit;font-size:16.5px;padding:12px 14px;border-radius:14px;border:2px solid #E6E1F2;margin:6px 0 10px;background:#fff;color:var(--ink)}
+.field:focus{outline:none;border-color:var(--lav)}
+textarea.field{min-height:90px;font-size:13px;font-family:monospace}
+label.lbl,.lbl{font-weight:800;font-size:15px}
+.msgout{background:var(--lav-l);border-radius:18px;padding:14px 16px;font-weight:700;font-size:17.5px;min-height:56px}
+.reveal{background:var(--mint-l);border-radius:16px;padding:12px 14px;font-weight:600;margin-top:8px}
+.levelpick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+
+.overlay{position:fixed;inset:0;background:rgba(62,58,91,.35);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.sheet{background:#FFFBF8;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;border-radius:28px 28px 0 0;padding:18px 18px calc(28px + env(safe-area-inset-bottom));animation:up .28s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sheet .grab{width:44px;height:5px;border-radius:9px;background:#DCD5EE;margin:0 auto 12px}
+.big3018{display:block;text-align:center;background:linear-gradient(135deg,#F7A1B5,#F27D8E);color:#fff;border-radius:24px;padding:18px;text-decoration:none;box-shadow:0 8px 20px rgba(242,125,142,.35)}
+.big3018 b{display:block;font-family:'Baloo 2',sans-serif;font-size:46px;line-height:1}
+.big3018 span{font-weight:700;font-size:15px}
+.numlist a,.numlist div{display:flex;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:11px 14px;margin:8px 0;text-decoration:none;font-weight:700;box-shadow:0 2px 8px rgba(90,80,140,.08)}
+.numlist .n{flex:0 0 64px;text-align:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;border-radius:12px;padding:4px 0}
+.numlist small{display:block;font-weight:600;color:var(--muted);font-size:13.5px}
+
+.toast{position:fixed;top:calc(70px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-20px);background:#fff;border-radius:999px;padding:10px 18px;font-weight:800;box-shadow:var(--shadow);z-index:70;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.foot{text-align:center;color:var(--muted);font-size:13.5px;font-weight:600;margin-top:26px}
+.settings{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.settings .chip{font-size:13.5px}
+.confirmbox{background:var(--pink-l);border-radius:18px;padding:14px;margin-top:10px;text-align:center;font-weight:700}
+.final{background:linear-gradient(180deg,#FFF6D9,#FDE8F0);border-radius:28px;padding:18px;box-shadow:var(--shadow);text-align:center;margin-top:18px}
+.final h3{font-size:24px}
+.fade{animation:fade .35s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Espace prof */
+.profbadge{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.seance{background:#fff;border-radius:20px;box-shadow:var(--shadow);margin:12px 0;overflow:hidden}
+.seance > button{display:flex;width:100%;text-align:left;gap:12px;align-items:center;padding:14px 16px}
+.seance .sn{flex:0 0 44px;height:44px;border-radius:14px;background:var(--lav-l);display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:20px}
+.seance h3{font-size:18px}
+.seance small{display:block;color:var(--muted);font-weight:700;font-size:13.5px}
+.seance .body{padding:0 16px 16px}
+.steps{list-style:none;padding:0;margin:8px 0}
+.steps li{display:flex;gap:10px;padding:9px 0;border-top:1px dashed #E6E1F2;font-weight:600;font-size:15.5px}
+.steps li b{flex:0 0 64px;font-family:'Baloo 2',sans-serif;color:#8467CC}
+.kv{font-size:15px;margin:6px 0}
+.kv b{color:#8467CC}
+.cfgrow{background:#fff;border-radius:16px;padding:10px 12px;margin:8px 0;box-shadow:0 2px 8px rgba(90,80,140,.08)}
+.cfgrow .two{display:flex;gap:8px}
+.cfgrow .two .field{margin:4px 0}
+.warn{background:var(--butter-l);border-radius:16px;padding:12px 14px;font-weight:600;font-size:15px}
+
+/* Projection */
+body.proj{font-size:21px}
+.pscene{font-size:28px;font-weight:800;line-height:1.35;background:var(--peach-l);border-radius:28px;padding:26px;margin:14px 0}
+.popts{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){.popts{grid-template-columns:1fr 1fr}}
+.popt{background:#fff;border:4px solid #ECE7F7;border-radius:24px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.popt .L{flex:0 0 52px;height:52px;border-radius:16px;background:var(--lav-l);display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:28px}
+.popt .tx{flex:1;font-weight:700;font-size:21px;line-height:1.35}
+.popt .fbp{display:block;font-weight:600;font-size:17px;margin-top:8px}
+.popt.best{border-color:var(--mint);background:var(--mint-l)} .popt.mid{border-color:var(--butter);background:var(--butter-l)} .popt.bad{border-color:var(--pink);background:var(--pink-l)}
+.vote{display:flex;align-items:center;gap:6px;margin-top:10px}
+.vote button{width:40px;height:40px;border-radius:12px;background:var(--lav-l);font-weight:800;font-size:22px}
+.vote span{min-width:40px;text-align:center;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:26px}
+.qbox{background:var(--sky-l);border-radius:24px;padding:18px 22px;margin-top:16px;font-size:22px;font-weight:700}
+.qbox li{margin:8px 0}
+.psort{font-size:32px;font-weight:800;text-align:center;background:#fff;border-radius:28px;padding:40px 24px;box-shadow:var(--shadow);line-height:1.35}
+
+/* Icônes maison */
+.ic{display:block;flex-shrink:0}
+.hic{display:flex;align-items:center;gap:10px}
+.hic.sm{gap:8px;font-size:15px}
+.emoji-big{display:block;margin-bottom:8px}
+.sign b,.mood b{display:flex;justify-content:center;margin-bottom:4px}
+.contact b{display:flex;justify-content:center;margin-bottom:6px}
+.geste h3{gap:10px}
+.sos{display:flex;align-items:center;gap:8px}
+.pscene .pic{display:inline-block;vertical-align:-12px;margin-right:12px}
+.numlist .n .ic{margin:0 auto}
+ul.soft li{position:relative;padding-left:34px}
+ul.soft li::before{content:"";position:absolute;left:13px;top:16px;width:9px;height:9px;border-radius:50%;background:var(--lav)}
+.tint-lav ul.soft li::before{background:#E98AA9}
+.tint-pink ul.soft li::before{background:#A98BE6}
+.tint-mint ul.soft li::before{background:#5CC39C}
+.tint-sky ul.soft li::before{background:#6FAEE3}
+.tint-butter ul.soft li::before{background:#F0B93A}
+.tint-peach ul.soft li::before{background:#F08F70}
+.section-title{position:relative;padding-bottom:8px}
+.section-title::after{content:"";position:absolute;left:4px;bottom:0;width:46px;height:6px;border-radius:9px;background:linear-gradient(90deg,var(--pink),var(--lav))}
+.isle .check{background:var(--butter-l);border:2px solid var(--butter);font-size:12px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.topbar,.sos,.back,.btn,.say{display:none!important}body{background:#fff}.wrap{padding-top:0}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><svg width="22" height="26" viewBox="0 0 22 26" aria-hidden="true"><polygon points="6,9 16,9 18,24 4,24" fill="#fff" stroke="#B9A3EC" stroke-width="1.2"/><polygon points="5.4,14 16.6,14 17,17 5,17" fill="#F7B5C9"/><rect x="7" y="4" width="8" height="5" rx="1.5" fill="#FFD970" stroke="#B9A3EC"/><polygon points="6,4 16,4 11,0" fill="#F4A3C0"/></svg> Le Phare</div>
+  <button class="exit" data-act="exit" aria-label="Sortie rapide : quitter l’appli tout de suite">✕ Sortie rapide</button>
+</div>
+
+<main class="wrap" id="app"></main>
+
+<button class="sos" data-act="help" aria-haspopup="dialog"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41C10 32 5 24 5 17.5a9.5 9.5 0 0 1 19-3 9.5 9.5 0 0 1 19 3C43 24 38 32 24 41z" fill="#fff"/></svg> Besoin d’aide&nbsp;?</button>
+
+<div class="overlay" id="help" role="dialog" aria-modal="true" aria-label="Besoin d’aide">
+  <div class="sheet" id="helpSheet"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============================================================
+     CONFIGURATION PAR DÉFAUT DE L’ÉTABLISSEMENT
+     Le plus simple : Espace prof > « Mon collège » (aucun code à toucher).
+     Vous pouvez aussi compléter "nom" et "lieu" directement ici.
+     ============================================================ -->
+<script type="application/json" id="cfg">
+{
+ "etablissement": "",
+ "contacts": [
+  {
+   "emoji": "compass",
+   "role": "CPE",
+   "nom": "",
+   "lieu": "Bureau de la vie scolaire"
+  },
+  {
+   "emoji": "book",
+   "role": "Ton prof principal",
+   "nom": "",
+   "lieu": "Ta classe"
+  },
+  {
+   "emoji": "eyes",
+   "role": "Assistants d’éducation (AED)",
+   "nom": "",
+   "lieu": "Vie scolaire, cour, cantine"
+  },
+  {
+   "emoji": "care",
+   "role": "Infirmerie scolaire",
+   "nom": "",
+   "lieu": "Infirmerie"
+  },
+  {
+   "emoji": "group",
+   "role": "Service social",
+   "nom": "",
+   "lieu": "Sur rendez-vous"
+  },
+  {
+   "emoji": "talk",
+   "role": "Psychologue de l’Éducation nationale",
+   "nom": "",
+   "lieu": "Sur rendez-vous"
+  },
+  {
+   "emoji": "shield",
+   "role": "Équipe ressource pHARe",
+   "nom": "",
+   "lieu": "Adultes formés au collège"
+  },
+  {
+   "emoji": "star",
+   "role": "Élèves ambassadeurs pHARe",
+   "nom": "",
+   "lieu": "Dans les classes"
+  },
+  {
+   "emoji": "heart",
+   "role": "Tout adulte de confiance",
+   "nom": "",
+   "lieu": "Au collège ou à la maison"
+  }
+ ]
+}
+</script>
+
+<script type="application/json" id="data">
+{
+ "modules": [
+  {
+   "id": "m1",
+   "n": "Île 1",
+   "c": "c1",
+   "tint": "tint-sky",
+   "ico": "search",
+   "title": "Comprendre",
+   "sub": "Conflit ou harcèlement ? En vrai et en ligne : savoir reconnaître."
+  },
+  {
+   "id": "m2",
+   "n": "Île 2",
+   "c": "c2",
+   "tint": "tint-peach",
+   "ico": "signpost",
+   "title": "Et toi, tu fais quoi ?",
+   "sub": "8 situations. À toi de choisir comment réagir."
+  },
+  {
+   "id": "m3",
+   "n": "Île 3",
+   "c": "c3",
+   "tint": "tint-lav",
+   "ico": "shield",
+   "title": "Mon bouclier numérique",
+   "sub": "Les bons réflexes pour te protéger en ligne, avec ou sans réseaux sociaux."
+  },
+  {
+   "id": "m4",
+   "n": "Île 4",
+   "c": "c4",
+   "tint": "tint-mint",
+   "ico": "talk",
+   "title": "À qui parler ?",
+   "sub": "Les personnes qui peuvent t’aider et comment leur en parler."
+  },
+  {
+   "id": "m5",
+   "n": "Île 5",
+   "c": "c5",
+   "tint": "tint-pink",
+   "ico": "flower",
+   "title": "Prendre soin de soi",
+   "sub": "Émotions, respiration, s’affirmer, se mettre à la place de l’autre."
+  }
+ ],
+ "m1cards": [
+  {
+   "tint": "tint-sky",
+   "emoji": "thought",
+   "title": "Le harcèlement, c’est quoi ?",
+   "html": "<p>C’est quand un ou plusieurs élèves s’en prennent <b>encore et encore</b>à un autre élève qui n’arrive pas à se défendre : moqueries, surnoms, insultes, coups, bousculades, rumeurs, mise à l’écart…</p>"
+  },
+  {
+   "tint": "tint-lav",
+   "emoji": "traffic",
+   "title": "Les 3 signes qui alertent",
+   "signs": [
+    [
+     "repeat",
+     "Ça se répète",
+     "Ce n’est pas une fois : ça dure, ça revient."
+    ],
+    [
+     "scales",
+     "Un rapport de force",
+     "Plusieurs contre un, ou quelqu’un de plus fort ou plus « populaire »."
+    ],
+    [
+     "island",
+     "L’isolement",
+     "La personne visée se retrouve à l’écart et n’ose pas en parler."
+    ]
+   ]
+  },
+  {
+   "tint": "tint-mint",
+   "emoji": "duo",
+   "title": "Un conflit, ce n’est pas pareil",
+   "html": "<p>Un <b>conflit</b>, c’est un désaccord entre personnes <b>à égalité</b>: chacun peut se défendre, et souvent on finit par se réconcilier.</p><p>Mais attention : un conflit qui dure et où l’un prend le dessus peut <b>se transformer</b>en harcèlement. Dans le doute, on en parle à un adulte.</p>"
+  },
+  {
+   "tint": "tint-peach",
+   "emoji": "phone",
+   "title": "Le cyberharcèlement",
+   "html": "<p>C’est la même chose, mais sur les téléphones, les réseaux et les jeux en ligne. En plus, ça <b>ne s’arrête jamais</b>(même le soir à la maison), beaucoup de gens peuvent voir, et ce qui est posté peut <b>rester</b>.</p><ul class='soft'><li>Insultes ou menaces en messages et commentaires</li><li>Rumeurs qui circulent</li><li>Photos ou vidéos partagées sans accord</li><li>Faux compte qui se fait passer pour quelqu’un</li><li>Exclusion volontaire d’un groupe</li><li>« Raid » : plein de personnes envoient chacune un message contre une même personne</li></ul>"
+  },
+  {
+   "tint": "tint-butter",
+   "emoji": "group",
+   "title": "Tout le monde a un rôle",
+   "html": "<ul class='soft'><li><b>La victime</b>: la personne qui subit.</li><li><b>Les auteurs</b>: ceux qui lancent les attaques.</li><li><b>Les suiveurs</b>: ils rient, likent, partagent, commentent.</li><li><b>Les témoins silencieux</b>: ils voient mais ne disent rien.</li><li><b>Les défenseurs</b>: ils soutiennent la victime et alertent.</li></ul><p><b>Sans public, le harcèlement perd sa force.</b>Les témoins ont un pouvoir énorme : c’est souvent grâce à eux que ça s’arrête.</p>"
+  },
+  {
+   "tint": "tint-pink",
+   "emoji": "scales",
+   "title": "Ce que dit la loi",
+   "html": "<p>Depuis 2022, le <b>harcèlement scolaire est un délit</b>inscrit dans le Code pénal, y compris quand il se passe en ligne.</p><p>Participer à un harcèlement en groupe en ligne peut être puni <b>même si on n’a envoyé qu’un seul message</b>. Liker, commenter, partager : ce n’est jamais « rien ».</p>"
+  }
+ ],
+ "m1sort": [
+  {
+   "t": "Léo et Sami se disputent une fois pour un match de foot, puis se réconcilient le lendemain.",
+   "a": 0,
+   "e": "Une dispute ponctuelle entre deux élèves à égalité : c’est un conflit."
+  },
+  {
+   "t": "Depuis la rentrée, un groupe imite la voix de Maëlle chaque fois qu’elle parle en classe.",
+   "a": 1,
+   "e": "Ça se répète, ils sont plusieurs contre une : c’est du harcèlement."
+  },
+  {
+   "t": "Deux amies ne sont pas d’accord sur leur exposé et s’énervent un peu.",
+   "a": 0,
+   "e": "Un désaccord entre égales, qui peut se régler en discutant : c’est un conflit."
+  },
+  {
+   "t": "Chaque soir, Tom reçoit des messages anonymes qui se moquent de son physique.",
+   "a": 1,
+   "e": "Répété, humiliant, et Tom ne peut pas se défendre face à un anonyme : c’est du cyberharcèlement."
+  },
+  {
+   "t": "Nina a été retirée du groupe de classe, et tout le monde a reçu la consigne de ne plus lui parler.",
+   "a": 1,
+   "e": "L’exclusion organisée est une forme de harcèlement, même sans insulte."
+  },
+  {
+   "t": "Pendant un débat en classe, Adam et Jade défendent des avis opposés avec énergie.",
+   "a": 0,
+   "e": "Débattre, ce n’est pas harceler : chacun peut s’exprimer."
+  },
+  {
+   "t": "Une photo de Hugo endormi dans le car tourne sur plusieurs comptes avec des commentaires moqueurs.",
+   "a": 1,
+   "e": "Image partagée sans accord, beaucoup de monde, commentaires humiliants : c’est du cyberharcèlement."
+  },
+  {
+   "t": "Malik se fait bousculer par accident dans le couloir. L’autre élève s’excuse.",
+   "a": 0,
+   "e": "Un accident, sans intention de nuire et sans répétition : ce n’est pas du harcèlement."
+  }
+ ],
+ "scenarios": [
+  {
+   "id": "s1",
+   "ico": "phone",
+   "persp": "temoin",
+   "title": "Le groupe de classe",
+   "text": "21 h. Dans le groupe WhatsApp de la classe, quelqu’un poste une photo d’Inès modifiée avec des stickers moqueurs. Les « mdrrr » s’enchaînent. Inès est dans le groupe.",
+   "q": [
+    "Pourquoi est-ce si difficile de ne pas réagir quand tout le groupe rit ?",
+    "Qu’est-ce qu’Inès ressent en voyant les « mdrrr » s’enchaîner ?"
+   ],
+   "choices": [
+    {
+     "t": "J’envoie un « mdrrr » aussi, c’est juste pour rire.",
+     "v": 0,
+     "fb": "Chaque réaction encourage l’auteur et montre à Inès que tout le monde est contre elle. Le « juste pour rire » ne fait rire que ceux qui ne sont pas visés."
+    },
+    {
+     "t": "Je ne dis rien et je ferme l’appli.",
+     "v": 1,
+     "fb": "Tu ne participes pas, c’est déjà bien. Mais Inès voit que personne ne réagit : le silence peut ressembler à un accord."
+    },
+    {
+     "t": "Je ne réagis pas dans le groupe. Je fais une capture, j’écris à Inès en privé et j’en parle à un adulte demain.",
+     "v": 3,
+     "fb": "C’est la réaction la plus protectrice : tu n’alimentes pas le groupe, tu gardes une preuve, Inès sait qu’elle n’est pas toute seule, et un adulte peut agir."
+    },
+    {
+     "t": "J’insulte celui qui a posté la photo, dans le groupe.",
+     "v": 1,
+     "fb": "Ton intention est bonne, mais répondre par l’attaque fait souvent monter la tension, et tu risques de devenir la prochaine cible. Un message calme (« Pas drôle, retire-la ») ou un adulte, c’est plus efficace."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "ico": "bench",
+   "persp": "temoin",
+   "title": "Le banc du fond de la cour",
+   "text": "Depuis plusieurs semaines, Yanis est seul à la récré. Trois élèves viennent souvent lui prendre son goûter et le bousculer « pour rigoler ». Il ne dit rien.",
+   "q": [
+    "Pourquoi Yanis ne dit-il rien, d’après vous ?",
+    "Quelle différence entre « rigoler avec » quelqu’un et « rigoler de » quelqu’un ?"
+   ],
+   "choices": [
+    {
+     "t": "Ce ne sont pas mes affaires.",
+     "v": 0,
+     "fb": "Si personne ne s’en mêle, rien ne change. Ce que vit Yanis coche les trois signes : ça se répète, ils sont plusieurs contre un, il est isolé."
+    },
+    {
+     "t": "Je vais m’asseoir à côté de lui de temps en temps, avec mes amis.",
+     "v": 2,
+     "fb": "Super réflexe : l’isolement est l’arme principale du harcèlement, et être entouré protège. Pour que ça s’arrête vraiment, il faudra aussi qu’un adulte le sache."
+    },
+    {
+     "t": "Je préviens la vie scolaire ou un élève ambassadeur, et je reste proche de Yanis.",
+     "v": 3,
+     "fb": "Bravo : tu combines les deux gestes qui comptent le plus, entourer la victime et alerter un adulte. Ce n’est pas balancer, c’est protéger."
+    },
+    {
+     "t": "Je filme la scène pour la poster et dénoncer ce qui se passe.",
+     "v": 0,
+     "fb": "Publier la vidéo humilierait encore plus Yanis, devant encore plus de monde. Une preuve, ça se montre à un adulte, ça ne se poste pas."
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "ico": "sneaker",
+   "persp": "temoin",
+   "title": "Le vestiaire",
+   "text": "En EPS, dans le vestiaire, deux élèves se moquent du corps de Lucas à chaque séance. Les autres rient un peu, gênés.",
+   "q": [
+    "Pourquoi rit-on parfois alors qu’on est gêné ?",
+    "Que peut faire un adulte que les élèves ne peuvent pas faire ?"
+   ],
+   "choices": [
+    {
+     "t": "Je ris aussi, sinon c’est de moi qu’on va se moquer.",
+     "v": 0,
+     "fb": "Cette peur est très fréquente et compréhensible. Mais chaque rire donne du pouvoir aux moqueurs. Tu peux simplement ne pas rire : c’est déjà un message."
+    },
+    {
+     "t": "Je dis calmement : « Arrêtez, c’est pas drôle. »",
+     "v": 2,
+     "fb": "Courageux et souvent efficace : il suffit parfois d’une voix pour que les autres osent aussi. Si ça continue, il faut prévenir un adulte."
+    },
+    {
+     "t": "J’en parle au professeur d’EPS après le cours, et je dis à Lucas que je suis de son côté.",
+     "v": 3,
+     "fb": "Très bonne idée : l’adulte peut organiser les vestiaires et faire cesser les moqueries, et Lucas sait qu’il n’est pas tout seul."
+    },
+    {
+     "t": "J’attends, ça va passer tout seul.",
+     "v": 0,
+     "fb": "Les moqueries répétées ne passent pas toutes seules : elles s’installent. Plus on agit tôt, plus c’est simple de les arrêter."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "ico": "ghost",
+   "persp": "victime",
+   "title": "La story",
+   "text": "Tu découvres qu’une story moqueuse sur toi circule sur Snapchat depuis ce matin. Ton téléphone n’arrête pas de vibrer.",
+   "q": [
+    "Pourquoi la honte empêche-t-elle souvent de parler ?",
+    "Que dirais-tu à un ami ou une amie qui vit ça ?"
+   ],
+   "choices": [
+    {
+     "t": "Je réponds à tout le monde pour me défendre.",
+     "v": 0,
+     "fb": "C’est normal d’avoir envie de te défendre. Mais répondre alimente souvent la machine. Tu as le droit de ne pas répondre : ce n’est pas perdre."
+    },
+    {
+     "t": "Je fais des captures d’écran, je bloque les comptes et je signale la story.",
+     "v": 2,
+     "fb": "Excellents réflexes. Il reste une étape essentielle : en parler à un adulte de confiance ou au 3018. Tu ne dois pas gérer ça sans aide."
+    },
+    {
+     "t": "Je garde des captures, je bloque, je signale, et j’en parle à un adulte ou j’appelle le 3018.",
+     "v": 3,
+     "fb": "C’est le plan complet. Le 3018 est gratuit et confidentiel, et il peut aider à faire supprimer les contenus. Ce qui t’arrive n’est pas de ta faute."
+    },
+    {
+     "t": "Je supprime mon compte et je n’en parle à personne, j’ai trop honte.",
+     "v": 0,
+     "fb": "La honte, ce n’est pas à toi de la porter. Supprimer ton compte efface aussi les preuves, et le silence t’isole. En parler, c’est reprendre la main."
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "ico": "rumor",
+   "persp": "temoin",
+   "title": "La rumeur",
+   "text": "Une rumeur circule sur Emma. Une amie te l’envoie avec ce message : « Transfère, tout le monde doit savoir ! »",
+   "q": [
+    "Comment une rumeur peut-elle devenir du harcèlement ?",
+    "Est-ce difficile de dire non à un ami ? Comment le faire ?"
+   ],
+   "choices": [
+    {
+     "t": "Je transfère, tout le monde le fait déjà.",
+     "v": 0,
+     "fb": "Chaque transfert fait grandir la rumeur. Et en ligne, participer même avec un seul message peut être puni par la loi."
+    },
+    {
+     "t": "Je ne transfère pas.",
+     "v": 1,
+     "fb": "Bien : la rumeur s’arrête chez toi. Tu peux aller plus loin en le disant à ton amie."
+    },
+    {
+     "t": "Je ne transfère pas et je réponds : « Je ne fais pas tourner ça, c’est pas cool pour Emma. »",
+     "v": 3,
+     "fb": "Parfait : tu coupes la chaîne et tu fais réfléchir ton amie. Si la rumeur prend de l’ampleur, préviens un adulte."
+    },
+    {
+     "t": "Je vais demander à Emma si c’est vrai, devant tout le monde.",
+     "v": 0,
+     "fb": "Même avec de bonnes intentions, l’interroger en public l’exposerait encore plus. Si tu veux l’aider, fais-le en privé, avec douceur."
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "ico": "mask",
+   "persp": "temoin",
+   "title": "Le faux compte",
+   "text": "Un compte TikTok se fait passer pour Noah, avec sa photo, et publie des vidéos ridicules « en son nom ».",
+   "q": [
+    "Quelles conséquences ce faux compte peut-il avoir pour Noah ?",
+    "Pourquoi commenter, même pour défendre, peut aggraver la situation ?"
+   ],
+   "choices": [
+    {
+     "t": "Je m’abonne pour voir la suite.",
+     "v": 0,
+     "fb": "S’abonner, liker ou commenter donne de la visibilité au faux compte. Et Noah le vit très mal, même si ce n’est « que » TikTok."
+    },
+    {
+     "t": "Je signale le compte pour usurpation d’identité et je préviens Noah en privé.",
+     "v": 3,
+     "fb": "Exactement : les plateformes prévoient ce signalement, et Noah peut en parler à un adulte ou au 3018 pour faire fermer le compte rapidement."
+    },
+    {
+     "t": "Je commente pour dire que c’est un faux.",
+     "v": 1,
+     "fb": "C’est gentil, mais chaque commentaire fait remonter les vidéos. Le signalement est plus efficace."
+    },
+    {
+     "t": "Je laisse faire, tout le monde sait que c’est un faux.",
+     "v": 0,
+     "fb": "Pas forcément : des gens peuvent croire que c’est vraiment Noah. Usurper l’identité de quelqu’un en ligne est puni par la loi."
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "ico": "like",
+   "persp": "suiveur",
+   "title": "Le like de trop",
+   "text": "Hier soir, tu as liké et commenté « mdrrr » sous une vidéo qui humilie Sarah. Aujourd’hui, tu la vois pleurer dans le couloir.",
+   "q": [
+    "Un like, est-ce vraiment « rien » ?",
+    "Comment réparer quand on a participé ?"
+   ],
+   "choices": [
+    {
+     "t": "Ce n’est pas moi qui ai posté, je n’y suis pour rien.",
+     "v": 0,
+     "fb": "Celui qui poste n’est pas le seul responsable : chaque like et chaque commentaire ajoute au poids que porte Sarah."
+    },
+    {
+     "t": "Je retire mon like et mon commentaire.",
+     "v": 1,
+     "fb": "C’est un bon début : ta trace disparaît. Tu peux aller plus loin pour réparer."
+    },
+    {
+     "t": "Je retire mon like et mon commentaire, je m’excuse auprès de Sarah et je signale la vidéo.",
+     "v": 3,
+     "fb": "Bravo, ça demande du courage. Reconnaître une erreur et réparer, c’est ce qui rend quelqu’un digne de confiance. Tu peux aussi prévenir un adulte."
+    },
+    {
+     "t": "Je fais comme si de rien n’était.",
+     "v": 0,
+     "fb": "Sarah, elle, ne peut pas faire comme si de rien n’était. Il n’est jamais trop tard pour changer de camp."
+    }
+   ]
+  },
+  {
+   "id": "s8",
+   "ico": "door",
+   "persp": "temoin",
+   "title": "Le groupe « sans Lina »",
+   "text": "Des élèves créent un nouveau groupe de classe « sans Lina » et te proposent d’y entrer : « Elle est trop bizarre, on veut être tranquilles. »",
+   "q": [
+    "Exclure sans insulter, est-ce du harcèlement ?",
+    "Que ressent-on quand on découvre qu’un groupe existe sans soi ?"
+   ],
+   "choices": [
+    {
+     "t": "J’entre, comme tout le monde.",
+     "v": 0,
+     "fb": "Exclure quelqu’un volontairement est une forme de harcèlement : l’isolement fait très mal, même sans insulte."
+    },
+    {
+     "t": "Je refuse d’entrer.",
+     "v": 1,
+     "fb": "Bien joué, tu ne participes pas à l’exclusion. Tu peux aussi dire pourquoi."
+    },
+    {
+     "t": "Je refuse et je dis pourquoi : « Je ne rentre pas dans un groupe fait pour exclure quelqu’un. »",
+     "v": 3,
+     "fb": "Très fort : tu poses une limite claire et tu montres aux autres qu’on peut dire non. Si Lina est mise à l’écart partout, parles-en à un adulte."
+    },
+    {
+     "t": "J’entre mais je ne dis rien dedans.",
+     "v": 0,
+     "fb": "Même silencieux, faire partie du groupe valide l’exclusion. Refuser, c’est déjà agir."
+    }
+   ]
+  }
+ ],
+ "gestes": [
+  {
+   "e": "stop",
+   "t": "Stop : ne réponds pas",
+   "d": "Celui qui harcèle cherche une réaction. Ne pas répondre, ce n’est pas perdre : c’est ne pas lui donner ce qu’il veut."
+  },
+  {
+   "e": "camera",
+   "t": "Capture : garde des preuves",
+   "d": "Fais des captures d’écran avec la date, l’heure, le pseudo et le lien. Ne les publie pas : montre-les à un adulte."
+  },
+  {
+   "e": "block",
+   "t": "Bloque",
+   "d": "Bloque les comptes ou les joueurs qui t’attaquent. Tu as le droit de te protéger, sans te justifier."
+  },
+  {
+   "e": "flag",
+   "t": "Signale",
+   "d": "Utilise le bouton « Signaler » du réseau ou du jeu. Le 3018 peut aussi demander aux plateformes de supprimer les contenus."
+  },
+  {
+   "e": "talk",
+   "t": "Parle",
+   "d": "Raconte à un adulte de confiance ou appelle le 3018 : gratuit, anonyme et confidentiel, 7 jours sur 7, de 9 h à 23 h."
+  },
+  {
+   "e": "bulb",
+   "t": "Avant de poster",
+   "d": "Est-ce que je le dirais en face ? La personne est-elle d’accord ? Est-ce que ça peut blesser, maintenant ou plus tard ?"
+  }
+ ],
+ "shield": {
+  "Snapchat": [
+   "Mode fantôme activé sur la Snap Map",
+   "Seuls mes amis peuvent me contacter",
+   "J’ajoute seulement des gens que je connais en vrai"
+  ],
+  "Instagram": [
+   "Compte privé",
+   "Mots masqués activés pour filtrer les commentaires blessants",
+   "Je sais utiliser « Restreindre » et « Bloquer »"
+  ],
+  "TikTok": [
+   "Compte privé",
+   "Je choisis qui peut commenter mes vidéos",
+   "Je sais signaler une vidéo ou un compte"
+  ],
+  "WhatsApp": [
+   "Qui peut m’ajouter aux groupes : « Mes contacts »",
+   "Photo de profil visible seulement par mes contacts",
+   "Je sais quitter et signaler un groupe"
+  ],
+  "Jeux en ligne": [
+   "Chat vocal et écrit limité à mes amis",
+   "Je ne donne jamais mon nom, mon collège ou mon adresse",
+   "Je sais bloquer et signaler un joueur"
+  ],
+  "Partout": [
+   "Un mot de passe secret, différent pour chaque compte",
+   "Je ne partage pas ma localisation en public",
+   "Je demande l’accord avant de poster la photo de quelqu’un"
+  ]
+ },
+ "avantCompte": [
+  {
+   "tint": "tint-sky",
+   "emoji": "cake",
+   "title": "13 ans : l’âge minimum",
+   "html": "<p>Snapchat, Instagram, TikTok et WhatsApp demandent d’avoir <b>au moins 13 ans</b>. Ce n’est pas pour t’embêter : en dessous, on est moins protégé face aux contenus choquants, aux inconnus et aux moqueries.</p><p>Mentir sur son âge, c’est perdre les protections prévues pour les plus jeunes.</p>"
+  },
+  {
+   "tint": "tint-lav",
+   "emoji": "gamepad",
+   "title": "Les jeux en ligne aussi",
+   "html": "<p>Fortnite, Roblox, Minecraft… On y croise des inconnus et parfois des insultes dans le chat.</p><ul class='soft'><li>Limite le chat vocal et écrit à tes amis</li><li>Ne donne jamais ton nom, ton collège ni ton adresse</li><li>Bloque et signale un joueur qui t’insulte</li><li>Si un joueur te met mal à l’aise, parles-en à un adulte</li></ul>"
+  },
+  {
+   "tint": "tint-peach",
+   "emoji": "talk",
+   "title": "Les groupes de messages",
+   "html": "<p>Même sans réseau social, les groupes de messages (SMS, WhatsApp de la famille ou de la classe) existent déjà. Les mêmes règles comptent :</p><ul class='soft'><li>Pas de photo de quelqu’un sans son accord</li><li>On ne crée pas de groupe pour exclure quelqu’un</li><li>Tu as le droit de quitter un groupe qui te fait du mal</li></ul>"
+  },
+  {
+   "tint": "tint-mint",
+   "emoji": "key",
+   "title": "Le jour où tu créeras ton compte",
+   "html": "<ul class='soft'><li>Crée-le avec un parent, pour faire les réglages ensemble</li><li>Compte privé dès le départ</li><li>Un pseudo sans ton nom complet</li><li>Localisation désactivée</li><li>Un mot de passe que toi seul connais</li></ul>"
+  }
+ ],
+ "m3quiz": [
+  {
+   "t": "Si je supprime les messages blessants, le problème disparaît.",
+   "a": false,
+   "e": "Faux. Supprimer efface aussi les preuves. Fais d’abord des captures, puis parles-en."
+  },
+  {
+   "t": "Partager une vidéo humiliante, même si ce n’est pas moi qui l’ai filmée, c’est participer.",
+   "a": true,
+   "e": "Vrai. Chaque partage multiplie le nombre de personnes qui voient la victime humiliée."
+  },
+  {
+   "t": "Le 3018 peut aider à faire supprimer un contenu publié sur un réseau social.",
+   "a": true,
+   "e": "Vrai. Le 3018 travaille directement avec les plateformes pour faire retirer les contenus de harcèlement."
+  },
+  {
+   "t": "Avec un compte privé, personne ne peut faire de capture de mes publications.",
+   "a": false,
+   "e": "Faux. Tes abonnés peuvent toujours faire des captures. Le compte privé limite qui voit, pas ce qu’ils en font."
+  },
+  {
+   "t": "Répondre aux insultes par des insultes, ça règle le problème.",
+   "a": false,
+   "e": "Faux. Ça fait souvent monter la tension, et ça peut même se retourner contre toi."
+  },
+  {
+   "t": "Publier la photo de quelqu’un sans son accord, ce n’est pas grave si c’est drôle.",
+   "a": false,
+   "e": "Faux. Chacun a un droit à l’image : poster une photo sans accord peut blesser et être puni."
+  }
+ ],
+ "phrases": [
+  "« J’ai besoin de vous parler, c’est important. »",
+  "« Il se passe quelque chose avec des élèves et je ne sais pas quoi faire. »",
+  "« Je m’inquiète pour quelqu’un de ma classe. »",
+  "« C’est difficile à dire. Est-ce que je peux vous l’écrire ? »"
+ ],
+ "ami": [
+  "Écoute sans juger.",
+  "Dis-lui que ce n’est pas de sa faute.",
+  "Reste près de cette personne : à la récré, à la cantine, en ligne.",
+  "Propose de l’accompagner voir un adulte.",
+  "Ne promets pas de garder le secret si elle est en danger."
+ ],
+ "moods": [
+  {
+   "e": "joy",
+   "t": "Joie",
+   "m": "Tant mieux ! Profite de cette énergie… et pense à ceux autour de toi qui ont peut-être une journée plus difficile.",
+   "i": [
+    "Un sourire ou un « ça va ? » à quelqu’un qui est seul",
+    "Note ce qui t’a fait du bien aujourd’hui"
+   ],
+   "heavy": false
+  },
+  {
+   "e": "worry",
+   "t": "Inquiétude",
+   "m": "L’inquiétude, c’est ton cerveau qui essaie de te protéger. Elle devient plus légère quand on la partage.",
+   "i": [
+    "Essaie la respiration du Phare (onglet Respire)",
+    "Écris ce qui t’inquiète, puis choisis une personne à qui le dire"
+   ],
+   "heavy": false
+  },
+  {
+   "e": "sad",
+   "t": "Tristesse",
+   "m": "Être triste, c’est normal et ça a le droit d’exister. Tu n’as pas à faire semblant que tout va bien.",
+   "i": [
+    "Parle à quelqu’un en qui tu as confiance",
+    "Si c’est lourd depuis plusieurs jours, parles-en à un adulte aujourd’hui"
+   ],
+   "heavy": true
+  },
+  {
+   "e": "angry",
+   "t": "Colère",
+   "m": "La colère dit souvent qu’une limite a été dépassée. Elle est légitime ; ce qu’on en fait compte.",
+   "i": [
+    "Respire avant de répondre ou de poster quoi que ce soit",
+    "Utilise le message clair pour dire ce qui ne va pas sans blesser"
+   ],
+   "heavy": false
+  },
+  {
+   "e": "tired",
+   "t": "Fatigue",
+   "m": "Parfois on ne ressent plus grand-chose, ou tout semble trop. Ce n’est pas une faiblesse.",
+   "i": [
+    "Fais une vraie pause sans écran",
+    "Si ça dure, va à l’infirmerie ou parles-en à un adulte"
+   ],
+   "heavy": true
+  },
+  {
+   "e": "fear",
+   "t": "Peur",
+   "m": "La peur, c’est un signal important. Tu mérites de te sentir en sécurité, au collège comme en ligne.",
+   "i": [
+    "Va vers un adulte dès aujourd’hui",
+    "Appuie sur « Besoin d’aide ? » pour voir qui contacter"
+   ],
+   "heavy": true
+  }
+ ],
+ "empathie": [
+  {
+   "t": "Clara arrive dans un nouveau collège en cours d’année. À la cantine, elle mange seule depuis une semaine.",
+   "r": "Elle peut se sentir isolée, invisible, stressée de ne pas trouver sa place. Un simple « Tu veux venir avec nous ? » peut changer toute sa journée."
+  },
+  {
+   "t": "Malo bégaie quand il passe à l’oral. Quelqu’un imite sa voix dès que le prof a le dos tourné.",
+   "r": "Il peut ressentir de la honte, de la colère, et avoir peur de reprendre la parole. Ne pas rire et lui dire un mot gentil après le cours, ça compte énormément."
+  },
+  {
+   "t": "Une vidéo de Jade qui tombe en EPS a été partagée dans plusieurs groupes.",
+   "r": "Elle peut se sentir humiliée et avoir l’impression que tout le collège l’a vue. Ne pas partager, la soutenir en privé et signaler la vidéo, c’est l’aider concrètement."
+  }
+ ],
+ "feelings": [
+  "de la peine",
+  "de la tristesse",
+  "de la colère",
+  "de la gêne",
+  "de l’inquiétude",
+  "de la solitude"
+ ],
+ "charte": [
+  "Je ne ris pas, je ne like pas et je ne partage pas quand quelqu’un est humilié.",
+  "Je vais vers la personne qui est mise à l’écart.",
+  "Je demande l’accord avant de publier la photo de quelqu’un.",
+  "J’alerte un adulte ou le 3018 quand je vois du harcèlement.",
+  "Je parle aux autres comme j’aimerais qu’on me parle, en vrai comme en ligne."
+ ],
+ "seances": [
+  {
+   "t": "Mettre des mots sur le harcèlement",
+   "ile": "Île 1",
+   "obj": "Construire une définition commune du harcèlement et repérer ses trois signes.",
+   "cps": "Communiquer, penser de façon critique",
+   "mat": "Vidéoprojecteur, petits papiers",
+   "deroule": [
+    [
+     "10 min",
+     "Brise-glace anonyme : chaque élève écrit sur un papier un mot qu’il associe au harcèlement. Nuage de mots au tableau."
+    ],
+    [
+     "15 min",
+     "Lecture projetée des cartes « Le harcèlement, c’est quoi ? » et « Les 3 signes » (Île 1, avec la lecture audio si besoin)."
+    ],
+    [
+     "20 min",
+     "Groupes de 4 : rédiger une définition avec ses propres mots. Mise en commun, définition de classe."
+    ],
+    [
+     "10 min",
+     "Présentation du Phare : les 5 îles, le bouton « Besoin d’aide ? », la sortie rapide, aucune donnée enregistrée."
+    ]
+   ],
+   "trace": "La définition de la classe, affichée.",
+   "plus": "Chaque élève termine l’Île 1 en autonomie."
+  },
+  {
+   "t": "Conflit ou harcèlement ?",
+   "ile": "Île 1",
+   "obj": "Distinguer un conflit, un accident et une situation de harcèlement.",
+   "cps": "Penser de façon critique, prendre des décisions",
+   "mat": "Mode projection >Le grand tri",
+   "deroule": [
+    [
+     "5 min",
+     "Rappel des trois signes : répétition, rapport de force, isolement."
+    ],
+    [
+     "25 min",
+     "Le grand tri en classe entière : vote à main levée, puis justification à l’aide des trois signes avant la révélation."
+    ],
+    [
+     "15 min",
+     "Binômes : imaginer un conflit qui pourrait dégénérer, et repérer le moment où il faudrait alerter."
+    ],
+    [
+     "10 min",
+     "Bilan : « Dans le doute, on en parle »."
+    ]
+   ],
+   "trace": "Tableau à deux colonnes : conflit / harcèlement.",
+   "plus": ""
+  },
+  {
+   "t": "Le pouvoir des témoins",
+   "ile": "Îles 1 et 2",
+   "obj": "Comprendre les rôles et le pouvoir d’action des témoins.",
+   "cps": "Empathie, coopération",
+   "mat": "Mode projection >situations 2 et 3",
+   "deroule": [
+    [
+     "10 min",
+     "Carte « Tout le monde a un rôle » projetée et commentée."
+    ],
+    [
+     "30 min",
+     "Deux situations en projection : lecture, vote, révélation, débat avec les questions proposées."
+    ],
+    [
+     "10 min",
+     "Carte mentale collective : « Ce qu’un témoin peut faire »."
+    ],
+    [
+     "5 min",
+     "Trace écrite."
+    ]
+   ],
+   "trace": "Carte mentale « Ce qu’un témoin peut faire ».",
+   "plus": "Les élèves jouent les situations restantes de l’Île 2."
+  },
+  {
+   "t": "Quand ça continue en ligne",
+   "ile": "Îles 1 et 2",
+   "obj": "Identifier les formes du cyberharcèlement et leurs spécificités.",
+   "cps": "Penser de façon critique, communiquer",
+   "mat": "Mode projection >situations 1, 5 et 6",
+   "deroule": [
+    [
+     "10 min",
+     "Carte « Le cyberharcèlement » : pourquoi est-ce plus difficile à arrêter ?"
+    ],
+    [
+     "30 min",
+     "Trois situations en projection (groupe de classe, rumeur, faux compte) avec vote et débat."
+    ],
+    [
+     "15 min",
+     "Production collective : les 5 règles d’un bon groupe de classe."
+    ]
+   ],
+   "trace": "Les 5 règles du groupe de classe.",
+   "plus": ""
+  },
+  {
+   "t": "Mon bouclier numérique",
+   "ile": "Île 3",
+   "obj": "Connaître les réflexes de protection et les réglages essentiels.",
+   "cps": "Prendre soin de soi, prendre des décisions",
+   "mat": "Tablettes ou salle info ; projection possible",
+   "deroule": [
+    [
+     "10 min",
+     "Les 6 réflexes projetés et expliqués."
+    ],
+    [
+     "20 min",
+     "En autonomie : quiz vrai ou faux puis « Mon bouclier ». Les élèves sans compte choisissent « Pas encore de compte »."
+    ],
+    [
+     "15 min",
+     "Le jeu des preuves : sur une conversation fictive écrite au tableau, que faut-il capturer ? (date, heure, pseudo, lien)"
+    ],
+    [
+     "10 min",
+     "Bilan : ce que je règle ce soir."
+    ]
+   ],
+   "trace": "Les 6 réflexes, recopiés ou collés.",
+   "plus": "À articuler avec le passeport numérique Pix 6e."
+  },
+  {
+   "t": "Liker, partager : ce que dit la loi",
+   "ile": "Îles 1 et 2",
+   "obj": "Comprendre la responsabilité de chacun en ligne et le droit à l’image.",
+   "cps": "Penser de façon critique, prendre des décisions",
+   "mat": "Mode projection >situation 7",
+   "deroule": [
+    [
+     "10 min",
+     "Situation « Le like de trop » en projection, avec vote."
+    ],
+    [
+     "15 min",
+     "Carte « Ce que dit la loi » et notion de droit à l’image."
+    ],
+    [
+     "20 min",
+     "Débat mouvant : « Liker, ce n’est rien. » Les élèves se placent d’un côté ou de l’autre de la salle et argumentent."
+    ],
+    [
+     "10 min",
+     "Chacun écrit une phrase qui résume ce qu’il retient."
+    ]
+   ],
+   "trace": "Phrase personnelle.",
+   "plus": ""
+  },
+  {
+   "t": "Émotions et empathie",
+   "ile": "Île 5",
+   "obj": "Identifier et nommer ses émotions et celles des autres.",
+   "cps": "Conscience de soi, empathie, gérer ses émotions",
+   "mat": "Téléphones ou tablettes, ou projection",
+   "deroule": [
+    [
+     "10 min",
+     "Météo intérieure, chacun pour soi, sans partager sa réponse."
+    ],
+    [
+     "25 min",
+     "« À sa place » en groupes : une situation par groupe, émotions possibles et action concrète, présentation à la classe."
+    ],
+    [
+     "15 min",
+     "Lexique des émotions : roue des émotions au tableau."
+    ],
+    [
+     "5 min",
+     "Respiration du Phare en classe entière."
+    ]
+   ],
+   "trace": "Roue des émotions.",
+   "plus": ""
+  },
+  {
+   "t": "S’affirmer sans blesser : le message clair",
+   "ile": "Île 5",
+   "obj": "Savoir exprimer un désaccord ou une souffrance sans agresser.",
+   "cps": "Communiquer, s’affirmer",
+   "mat": "Onglet « Message clair » projeté",
+   "deroule": [
+    [
+     "10 min",
+     "Exemple de message clair construit en direct au tableau ou avec l’appli."
+    ],
+    [
+     "20 min",
+     "Binômes : écrire deux messages clairs à partir de situations du quotidien."
+    ],
+    [
+     "20 min",
+     "Saynètes volontaires devant la classe (jamais imposées)."
+    ],
+    [
+     "5 min",
+     "La limite : si ça continue après un message clair, on va voir un adulte."
+    ]
+   ],
+   "trace": "La structure du message clair.",
+   "plus": ""
+  },
+  {
+   "t": "À qui parler ?",
+   "ile": "Île 4",
+   "obj": "Identifier les adultes ressources et savoir comment les solliciter.",
+   "cps": "Demander de l’aide, coopérer",
+   "mat": "Île 4 ; si possible, intervention de la CPE ou des ambassadeurs",
+   "deroule": [
+    [
+     "10 min",
+     "Débat : « Parler, c’est balancer ? » Différence entre balancer et alerter."
+    ],
+    [
+     "15 min",
+     "Présentation des personnes ressources du collège, idéalement en leur présence."
+    ],
+    [
+     "20 min",
+     "Chacun prépare son plan d’alerte dans l’appli et découvre les phrases pour commencer."
+    ],
+    [
+     "10 min",
+     "Que faire quand c’est un ami ou une amie qui vit ça ?"
+    ]
+   ],
+   "trace": "Liste des personnes ressources du collège.",
+   "plus": ""
+  },
+  {
+   "t": "Notre charte et notre action",
+   "ile": "Toutes les îles",
+   "obj": "S’engager collectivement et transmettre.",
+   "cps": "Coopérer, s’engager",
+   "mat": "Grandes feuilles, appareil photo ou tablette",
+   "deroule": [
+    [
+     "15 min",
+     "Retour sur les 5 îles : ce qui a le plus marqué."
+    ],
+    [
+     "20 min",
+     "Charte de classe à partir de la charte du Phare, reformulée par les élèves."
+    ],
+    [
+     "20 min",
+     "Production pour la journée Non au harcèlement (novembre) ou le Safer Internet Day (février) : affiche, courte vidéo ou message pour les plus jeunes."
+    ]
+   ],
+   "trace": "Charte signée et affichée.",
+   "plus": "Possible participation au prix « Non au harcèlement »."
+  }
+ ],
+ "confidence": [
+  {
+   "tint": "tint-mint",
+   "t": "Pendant l’échange",
+   "l": [
+    "Accueillir dans un lieu calme, sans autre élève présent.",
+    "Écouter sans interrompre, sans juger et sans minimiser (« c’est pour rire », « ignore-les »).",
+    "Remercier : « Tu as bien fait de m’en parler. »",
+    "Poser des questions ouvertes : quoi, depuis quand, où, qui. Éviter « pourquoi ».",
+    "Ne pas promettre le secret : expliquer que vous allez en parler à des personnes qui peuvent aider."
+   ]
+  },
+  {
+   "tint": "tint-sky",
+   "t": "Juste après",
+   "l": [
+    "Noter les faits avec les mots de l’élève, la date et l’heure.",
+    "Informer le jour même le chef d’établissement et l’équipe ressource pHARe, qui déclenchent le protocole de traitement voté par l’établissement.",
+    "Pour les contenus en ligne : faire conserver les preuves sans les diffuser. Le 3018 conseille les familles et peut faire retirer les contenus.",
+    "Revenir vers l’élève pour lui dire que sa parole a été transmise et prise en compte."
+   ]
+  },
+  {
+   "tint": "tint-peach",
+   "t": "Le traitement : la méthode de la préoccupation partagée",
+   "l": [
+    "Dans pHARe, les situations sont traitées par l’équipe ressource (au moins 5 personnels formés), sous la responsabilité du chef d’établissement.",
+    "La méthode de la préoccupation partagée est non blâmante : des entretiens individuels courts avec l’élève ciblé, puis avec chaque intimidateur, pour partager une inquiétude pour la cible et faire émerger des propositions.",
+    "Des entretiens de suivi vérifient que la situation s’améliore. Si elle persiste, la direction prend des mesures de protection et, si besoin, des sanctions.",
+    "Votre rôle : signaler et transmettre les faits. Ne conduisez ces entretiens que si vous êtes formé et mandaté par l’équipe ressource.",
+    "Les faits et les actions sont consignés par la direction sur la plateforme pHARe, du signalement jusqu’à la résolution."
+   ]
+  },
+  {
+   "tint": "tint-pink",
+   "t": "À éviter",
+   "l": [
+    "Confronter vous-même l’auteur ou les auteurs.",
+    "Organiser une médiation entre la victime et l’auteur : elle est déconseillée en cas de harcèlement, car le rapport de force est inégal.",
+    "Demander à l’élève de « régler ça » seul.",
+    "Évoquer la situation devant la classe."
+   ]
+  },
+  {
+   "tint": "tint-butter",
+   "t": "Situations d’urgence",
+   "l": [
+    "Danger immédiat : 17 ou 112, et la direction.",
+    "Idées suicidaires exprimées : ne pas laisser l’élève seul, l’accompagner à l’infirmerie, prévenir la direction. Le 3114 répond aussi aux professionnels et à l’entourage.",
+    "Violences dans la famille : information préoccupante via la direction ; le 119 peut conseiller.",
+    "Crime ou délit : la direction en informe le procureur (article 40 du code de procédure pénale)."
+   ]
+  },
+  {
+   "tint": "tint-lav",
+   "t": "Et pour vous",
+   "l": [
+    "Recevoir une confidence peut secouer : vous avez le droit d’en parler à un collègue, à l’équipe ressource ou à la médecine de prévention.",
+    "Vous n’avez pas à tout porter seul : le traitement est collectif."
+   ]
+  }
+ ],
+ "presenter": [
+  {
+   "tint": "tint-lav",
+   "t": "Où se situe Le Phare dans pHARe",
+   "l": [
+    "Éduquer pour prévenir : Le Phare sert de support aux 10 heures d’apprentissages annuelles (compétences psychosociales, prévention du harcèlement).",
+    "Former une communauté protectrice : l’Île 4 fait connaître l’équipe ressource, les élèves ambassadeurs et les adultes du collège.",
+    "Intervenir efficacement : l’appli oriente vers les adultes et le 3018. Elle ne traite pas les situations : c’est le rôle de l’équipe ressource et du protocole de l’établissement.",
+    "Associer les parents : la page « Pour les familles » de l’espace prof est à transmettre aux parents.",
+    "Temps forts : séances 2 à 4 avant la journée Non au harcèlement, séance 10 pour le prix Non au harcèlement ou le Safer Internet Day."
+   ]
+  },
+  {
+   "tint": "tint-sky",
+   "t": "Présenter l’appli en 5 minutes",
+   "l": [
+    "« Le Phare est une appli pour comprendre le harcèlement, savoir réagir et savoir à qui parler. »",
+    "« Elle n’enregistre rien sur vous : ni nom, ni réponses, seulement votre progression, sur votre appareil. »",
+    "Montrer le bouton « Besoin d’aide ? » et la « Sortie rapide ».",
+    "« Chaque île terminée allume un rayon du phare. Vous pouvez les faire dans l’ordre que vous voulez. »"
+   ]
+  },
+  {
+   "tint": "tint-butter",
+   "t": "Points d’attention",
+   "l": [
+    "Ces contenus peuvent remuer un élève qui vit ou a vécu une situation : prévenir l’équipe ressource et l’infirmerie avant la séance.",
+    "Ne jamais imposer de jouer un rôle de victime ou d’auteur en saynète.",
+    "Laisser la possibilité de faire une pause.",
+    "Informer les familles : l’appli peut aussi être découverte à la maison."
+   ]
+  },
+  {
+   "tint": "tint-mint",
+   "t": "Partager l’appli",
+   "l": [
+    "Configurez d’abord « Mon collège » pour afficher les noms et les lieux de vos personnes ressources.",
+    "Partagez ensuite le lien du collège (ENT, QR code, Pronote).",
+    "Le niveau (6e à 3e) se choisit sur l’accueil : il adapte l’Île 3 pour les élèves sans réseaux sociaux."
+   ]
+  }
+ ],
+ "ressources": [
+  {
+   "t": "3018 — signaler et se faire aider",
+   "u": "https://www.3018.fr",
+   "d": "Ligne nationale gratuite, tchat et appli. Peut faire retirer des contenus."
+  },
+  {
+   "t": "Le programme pHARe",
+   "u": "https://www.education.gouv.fr/non-au-harcelement/phare-un-dispositif-de-lutte-contre-le-harcelement-l-ecole-323435",
+   "d": "Présentation officielle du dispositif, protocole national de traitement et infographies."
+  },
+  {
+   "t": "Questionnaire d’auto-évaluation (Éduscol)",
+   "u": "https://eduscol.education.fr",
+   "d": "Grilles anonymes collège et lycée, à faire passer lors de la journée Non au harcèlement."
+  },
+  {
+   "t": "Association e-Enfance",
+   "u": "https://e-enfance.org",
+   "d": "L’association qui opère le 3018 : fiches pour les familles et les équipes."
+  },
+  {
+   "t": "Pix",
+   "u": "https://pix.fr",
+   "d": "Passeport numérique de 6e : sensibilisation aux risques en ligne."
+  }
+ ],
+ "familles": {
+  "titre": "Le Phare : une appli contre le harcèlement, pour votre enfant",
+  "blocs": [
+   {
+    "t": "Ce qu’est Le Phare",
+    "l": [
+     "Une appli gratuite utilisée au collège dans le cadre du programme national pHARe de lutte contre le harcèlement.",
+     "Votre enfant y apprend à reconnaître le harcèlement, à réagir comme témoin, à se protéger en ligne et à savoir à qui parler.",
+     "Elle ne demande aucun compte et n’enregistre aucune donnée personnelle."
+    ]
+   },
+   {
+    "t": "Des signes qui peuvent alerter",
+    "l": [
+     "Refus d’aller au collège, maux de ventre ou de tête le matin.",
+     "Changement d’humeur, tristesse, irritabilité, troubles du sommeil.",
+     "Isolement, perte d’amis, plus envie de sortir.",
+     "Baisse soudaine des résultats.",
+     "Réaction inquiète en recevant des messages, ou téléphone caché.",
+     "Affaires abîmées ou perdues de façon répétée."
+    ]
+   },
+   {
+    "t": "Si vous pensez que votre enfant est concerné",
+    "l": [
+     "Écoutez-le sans le juger et remerciez-le d’en parler.",
+     "Prévenez rapidement le collège (professeur principal, CPE ou direction) : la situation sera traitée selon le protocole pHARe de l’établissement.",
+     "Ne contactez pas vous-même l’élève auteur ou sa famille.",
+     "En ligne : faites des captures d’écran (date, pseudo, lien), sans les diffuser.",
+     "Appelez le 3018 : gratuit, anonyme et confidentiel, 7 jours sur 7 de 9 h à 23 h. Il peut faire retirer des contenus en ligne.",
+     "En cas de danger immédiat : 17 ou 112."
+    ]
+   }
+  ]
+ }
+}
+</script>
+
+<script>
+(function(){
+'use strict';
+
+var CFG0 = JSON.parse(document.getElementById('cfg').textContent);
+var D = JSON.parse(document.getElementById('data').textContent);
+var KEY = 'lephare_eleve_v2';
+var KEYCFG = 'lephare_cfg_v1';
+var app = document.getElementById('app');
+var CAN_SPEAK = !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
+
+/* ---------- Icônes maison (SVG, style pastel cerné) ---------- */
+var ICONS = {
+  search:'<circle cx="20" cy="20" r="12" fill="S"/><path d="M14 18a7 7 0 0 1 6-6" stroke="#fff"/><path d="M29 29l11 11" stroke-width="6"/>',
+  signpost:'<path d="M24 5v37"/><path d="M24 9h14l5 5.5-5 5.5H24z" fill="C"/><path d="M24 22H10l-5 5.5 5 5.5h14z" fill="L"/><path d="M15 43h18"/>',
+  shield:'<path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z" fill="L"/><path d="M17 24l5 5 9-10"/>',
+  talk:'<path d="M8 6h20a5 5 0 0 1 5 5v9a5 5 0 0 1-5 5H17l-7 6v-6H8a5 5 0 0 1-5-5v-9a5 5 0 0 1 5-5z" fill="M"/><path d="M33 16h7a5 5 0 0 1 5 5v9a5 5 0 0 1-5 5h-1v6l-7-6h-8a5 5 0 0 1-5-5v-1" fill="B"/><circle cx="12" cy="15.5" r="1.6" fill="K" stroke="none"/><circle cx="18" cy="15.5" r="1.6" fill="K" stroke="none"/><circle cx="24" cy="15.5" r="1.6" fill="K" stroke="none"/>',
+  flower:'<path d="M24 32v12"/><path d="M24 40c-3-5-9-5-11-2 3 3 8 3 11 2z" fill="M"/><circle cx="24" cy="11" r="7" fill="P"/><circle cx="33.5" cy="18" r="7" fill="P"/><circle cx="30" cy="28.5" r="7" fill="P"/><circle cx="18" cy="28.5" r="7" fill="P"/><circle cx="14.5" cy="18" r="7" fill="P"/><circle cx="24" cy="20" r="5" fill="B"/>',
+  phone:'<rect x="13" y="3" width="22" height="42" rx="5" fill="W"/><rect x="16.5" y="8" width="15" height="28" rx="2" fill="S"/><path d="M19.5 13h9v6h-5l-3 3v-3h-1z" fill="P" stroke-width="1.8"/><path d="M22 40h4"/>',
+  bench:'<path d="M35 22v20"/><circle cx="35" cy="14" r="9" fill="M"/><rect x="3" y="27" width="24" height="5" rx="2" fill="C"/><path d="M5 32v10M25 32v10M3 22h24"/><path d="M1 43h46"/>',
+  sneaker:'<path d="M4 31c0-7 2-14 6-17l6 4 6-2 4 6c7 1 15 3 18 8v4H4z" fill="S"/><path d="M4 34h40v5H4z" fill="W"/><path d="M17 20.5l2.5 3M21.5 18.5l2.5 3"/>',
+  ghost:'<path d="M11 41V20a13 13 0 0 1 26 0v21l-4.3-3-4.4 3-4.3-3-4.3 3-4.4-3z" fill="W"/><circle cx="19.5" cy="20" r="2" fill="K" stroke="none"/><circle cx="28.5" cy="20" r="2" fill="K" stroke="none"/><circle cx="16" cy="26" r="2.2" fill="P" stroke="none"/><circle cx="32" cy="26" r="2.2" fill="P" stroke="none"/><path d="M22 26c1 1 3 1 4 0"/>',
+  rumor:'<path d="M8 6h26a5 5 0 0 1 5 5v13a5 5 0 0 1-5 5H18l-8 7v-7H8a5 5 0 0 1-5-5V11a5 5 0 0 1 5-5z" fill="B"/><path d="M10 14h20M10 21h13"/><path d="M41 32c2.5 2.5 2.5 7 0 9.5M37.5 34.5c1 1 1 3.5 0 4.5"/>',
+  mask:'<path d="M7 9c11 5 23 5 34 0v15c0 11-8 19-17 19S7 35 7 24z" fill="L"/><path d="M14 20c2-2.5 5-2.5 7 0M27 20c2-2.5 5-2.5 7 0M18 31c4 3 8 3 12 0"/>',
+  like:'<path d="M17 21l6-14c3.5 0 5.5 2.5 5 6l-1 6h10a4 4 0 0 1 4 5l-3 14a4 4 0 0 1-4 3H17z" fill="P"/><rect x="6" y="20" width="11" height="23" rx="2.5" fill="W"/>',
+  door:'<path d="M3 43h42"/><rect x="12" y="4" width="22" height="39" rx="2" fill="C"/><rect x="16" y="9" width="14" height="12" rx="1.5" fill="W" stroke-width="1.8"/><circle cx="29" cy="27" r="2" fill="K" stroke="none"/><path d="M38 14l6 6M44 14l-6 6" stroke="#E98AA9"/>',
+  thought:'<path d="M15 31a8 8 0 0 1-3-15 10.5 10.5 0 0 1 20-4 8.5 8.5 0 0 1 6 14 7.5 7.5 0 0 1-9 5z" fill="S"/><circle cx="12" cy="38" r="3.2" fill="S"/><circle cx="6.5" cy="43.5" r="2" fill="S"/>',
+  traffic:'<path d="M24 41v5"/><rect x="15" y="2" width="18" height="39" rx="6" fill="W"/><circle cx="24" cy="11" r="4" fill="P"/><circle cx="24" cy="21.5" r="4" fill="B"/><circle cx="24" cy="32" r="4" fill="M"/>',
+  duo:'<circle cx="13" cy="14" r="6.5" fill="S"/><path d="M3 42c0-10 4.5-16 10-16s10 6 10 16z" fill="S"/><circle cx="35" cy="14" r="6.5" fill="P"/><path d="M25 42c0-10 4.5-16 10-16s10 6 10 16z" fill="P"/><path d="M25 4l-3 5h4l-3 5" stroke-width="2"/>',
+  group:'<circle cx="10" cy="19" r="5" fill="L"/><path d="M2 41c0-8 3.5-13 8-13s8 5 8 13z" fill="L"/><circle cx="38" cy="19" r="5" fill="M"/><path d="M30 41c0-8 3.5-13 8-13s8 5 8 13z" fill="M"/><circle cx="24" cy="13" r="6.5" fill="B"/><path d="M13 43c0-10 5-17 11-17s11 7 11 17z" fill="B"/>',
+  scales:'<path d="M24 7v33M15 42h18M8 12h32"/><path d="M8 12L3 25M8 12l5 13M40 12l-5 13M40 12l5 13"/><path d="M2 25h12a6 6 0 0 1-12 0z" fill="P"/><path d="M34 25h12a6 6 0 0 1-12 0z" fill="P"/><circle cx="24" cy="6" r="2.5" fill="B"/>',
+  repeat:'<circle cx="24" cy="24" r="6" fill="B"/><path d="M39 18A16 16 0 0 0 11 13"/><path d="M10 5v8h8"/><path d="M9 30a16 16 0 0 0 28 5"/><path d="M38 43v-8h-8"/>',
+  island:'<path d="M2 44c4-2.5 8-2.5 12 0s8 2.5 12 0 8-2.5 12 0 6 2 8 1" stroke="#7FB8E6"/><path d="M5 38c6-4 12-4.5 19-4.5s13 .5 19 4.5z" fill="B"/><path d="M25 34c0-7-1-13-3-18"/><path d="M22 16c-4-6-12-6-14-1 6-1 10 0 14 1zM22 16c3-6 11-7 14-3-6 0-10 1-14 3z" fill="M"/>',
+  cake:'<path d="M5 42h38"/><rect x="8" y="23" width="32" height="19" rx="3" fill="P"/><path d="M8 30c4 3 8-3 12 0s8-3 12 0 6-3 8 0"/><path d="M18 23v-8M30 23v-8"/><path d="M18 7c-2.5 2.5-1.5 5 0 5s2.5-2.5 0-5zM30 7c-2.5 2.5-1.5 5 0 5s2.5-2.5 0-5z" fill="B"/>',
+  gamepad:'<path d="M14 13h20a10 10 0 0 1 10 12l-1 9a5 5 0 0 1-9 2l-3-4H17l-3 4a5 5 0 0 1-9-2l-1-9a10 10 0 0 1 10-12z" fill="L"/><path d="M14 21v7M10.5 24.5h7"/><circle cx="32" cy="21.5" r="2" fill="P"/><circle cx="37" cy="27" r="2" fill="M"/>',
+  key:'<circle cx="15" cy="24" r="10" fill="B"/><circle cx="15" cy="24" r="3.5" fill="W"/><path d="M25 24h19M37 24v7M43 24v5"/>',
+  stop:'<path d="M17 4h14l10 10v14L31 38H17L7 28V14z" transform="translate(0 3)" fill="P"/><path d="M16 24h16" stroke="#fff" stroke-width="5"/>',
+  camera:'<rect x="4" y="14" width="40" height="27" rx="6" fill="S"/><path d="M16 14l3-6h10l3 6"/><circle cx="24" cy="27.5" r="7.5" fill="W"/><circle cx="24" cy="27.5" r="3" fill="L"/><circle cx="37.5" cy="20" r="1.6" fill="K" stroke="none"/>',
+  block:'<circle cx="24" cy="24" r="18" fill="P"/><circle cx="24" cy="24" r="11" fill="W"/><path d="M16.5 16.5l15 15" stroke-width="4"/>',
+  flag:'<path d="M10 45V5"/><path d="M10 7h27l-6 8.5 6 8.5H10z" fill="C"/>',
+  bulb:'<path d="M24 4a13.5 13.5 0 0 1 8 24.3V34H16v-5.7A13.5 13.5 0 0 1 24 4z" fill="B"/><path d="M18 39h12M20.5 44h7"/><path d="M20 16a5 5 0 0 1 5-4" stroke="#fff"/>',
+  compass:'<circle cx="24" cy="24" r="19" fill="W"/><circle cx="24" cy="24" r="14" fill="S" stroke-width="1.8"/><path d="M31 17l-4.5 9.5L17 31l4.5-9.5z" fill="P"/><circle cx="24" cy="24" r="1.8" fill="K" stroke="none"/>',
+  book:'<path d="M5 10c6.5-2.5 13-2 19 2v29c-6-4-12.5-4.5-19-2z" fill="S"/><path d="M43 10c-6.5-2.5-13-2-19 2v29c6-4 12.5-4.5 19-2z" fill="L"/>',
+  eyes:'<path d="M3 24c5-9.5 12.5-14 21-14s16 4.5 21 14c-5 9.5-12.5 14-21 14S8 33.5 3 24z" fill="W"/><circle cx="24" cy="24" r="8" fill="S"/><circle cx="24" cy="24" r="3" fill="K" stroke="none"/><circle cx="26.5" cy="21.5" r="1.3" fill="#fff" stroke="none"/>',
+  care:'<rect x="5" y="5" width="38" height="38" rx="11" fill="W"/><path d="M24 14v20M14 24h20" stroke="#F27D8E" stroke-width="5.5"/>',
+  star:'<path d="M24 4l6 12.3 13.5 2-9.8 9.5 2.3 13.5L24 34.9l-12 6.4 2.3-13.5-9.8-9.5 13.5-2z" fill="B"/>',
+  heart:'<path d="M24 41C10 32 5 24 5 17.5a9.5 9.5 0 0 1 19-3 9.5 9.5 0 0 1 19 3C43 24 38 32 24 41z" fill="P"/><path d="M12 16a5 5 0 0 1 4-4" stroke="#fff"/>',
+  calendar:'<rect x="5" y="9" width="38" height="34" rx="6" fill="W"/><path d="M5 15a6 6 0 0 1 6-6h26a6 6 0 0 1 6 6v5H5z" fill="P"/><path d="M15 5v8M33 5v8"/><circle cx="15" cy="28" r="2.3" fill="L" stroke="none"/><circle cx="24" cy="28" r="2.3" fill="L" stroke="none"/><circle cx="33" cy="28" r="2.3" fill="M" stroke="none"/><circle cx="15" cy="36" r="2.3" fill="L" stroke="none"/><circle cx="24" cy="36" r="2.3" fill="L" stroke="none"/>',
+  screen:'<path d="M24 31v8M15 43l9-4 9 4"/><rect x="4" y="5" width="40" height="26" rx="4" fill="S"/><path d="M20 12l10 6-10 6z" fill="W"/>',
+  ear:'<path d="M14 20a11 11 0 0 1 22 0c0 7-6 9-7 15a6.5 6.5 0 0 1-12 1" fill="C"/><path d="M20 21a5 5 0 0 1 10 0c0 3.5-3.5 4.5-3.5 7"/><path d="M40 12c2 2.5 2 7 0 9.5M43.5 9c3.5 4 3.5 11.5 0 15.5" stroke-width="2"/>',
+  school:'<path d="M24 9V2h7l-2 2.5 2 2.5h-7"/><path d="M5 21L24 9l19 12v22H5z" fill="C"/><rect x="19.5" y="31" width="9" height="12" rx="2" fill="L"/><circle cx="24" cy="21.5" r="3.5" fill="S"/><path d="M11 29h4M33 29h4"/>',
+  megaphone:'<path d="M14 28l3 11h5.5l-2.5-10"/><path d="M6 19h8l19-10v28l-19-10H6z" fill="B"/><path d="M39 17c2.5 2.5 2.5 9.5 0 12M43 13c4.5 5 4.5 15 0 20" stroke-width="2.2"/>',
+  link:'<path d="M20 28l8-8"/><path d="M22 14l4-4a8 8 0 0 1 12 12l-4 4" fill="none" stroke="#B9A3EC" stroke-width="5"/><path d="M26 34l-4 4a8 8 0 0 1-12-12l4-4" fill="none" stroke="#94C8F2" stroke-width="5"/>',
+  speaker:'<path d="M6 18h7l10-8v28l-10-8H6z" fill="B"/><path d="M30 18c2.5 2.5 2.5 9.5 0 12M35 13c5 5 5 17 0 22"/>',
+  sos:'<path d="M24 41C10 32 5 24 5 17.5a9.5 9.5 0 0 1 19-3 9.5 9.5 0 0 1 19 3C43 24 38 32 24 41z" fill="#fff"/>',
+  trophy:'<path d="M15 6h18v10a9 9 0 0 1-18 0z" fill="B"/><path d="M15 9H8c0 6 3 9 7 9M33 9h7c0 6-3 9-7 9"/><path d="M24 25v8M16 42h16l-2-9H18z" fill="L"/>',
+  joy:'<circle cx="24" cy="24" r="19" fill="B"/><path d="M15 21c1.5-2.5 4.5-2.5 6 0M27 21c1.5-2.5 4.5-2.5 6 0"/><path d="M15 28c5 6.5 13 6.5 18 0"/><circle cx="12.5" cy="27" r="2.5" fill="P" stroke="none"/><circle cx="35.5" cy="27" r="2.5" fill="P" stroke="none"/>',
+  worry:'<circle cx="24" cy="24" r="19" fill="C"/><path d="M14 15.5l6 2M34 15.5l-6 2"/><circle cx="18" cy="22" r="2" fill="K" stroke="none"/><circle cx="30" cy="22" r="2" fill="K" stroke="none"/><path d="M16.5 32c2.5-2 5-2 7.5 0s5 2 7.5 0"/>',
+  sad:'<circle cx="24" cy="24" r="19" fill="S"/><circle cx="18" cy="21" r="2" fill="K" stroke="none"/><circle cx="30" cy="21" r="2" fill="K" stroke="none"/><path d="M17 33c4.5-4.5 9.5-4.5 14 0"/><path d="M32 25c-1.2 2-2.2 3.2-2.2 4.4a2.2 2.2 0 0 0 4.4 0c0-1.2-1-2.4-2.2-4.4z" fill="#7FB8E6" stroke-width="1.5"/>',
+  angry:'<circle cx="24" cy="24" r="19" fill="P"/><path d="M13.5 16l7.5 3.5M34.5 16L27 19.5"/><circle cx="18" cy="23" r="2" fill="K" stroke="none"/><circle cx="30" cy="23" r="2" fill="K" stroke="none"/><path d="M17 33.5c4-2.5 10-2.5 14 0"/>',
+  tired:'<circle cx="24" cy="24" r="19" fill="L"/><path d="M14.5 22.5c2 1.5 4.5 1.5 6.5 0M27 22.5c2 1.5 4.5 1.5 6.5 0"/><path d="M20 32h8"/><path d="M33 4h6l-6 6h6" stroke-width="2"/>',
+  fear:'<circle cx="24" cy="24" r="19" fill="M"/><path d="M14 14.5l5 2.5M34 14.5L29 17"/><circle cx="18" cy="22" r="3.4" fill="W" stroke-width="1.8"/><circle cx="30" cy="22" r="3.4" fill="W" stroke-width="1.8"/><circle cx="18" cy="22.5" r="1.4" fill="K" stroke="none"/><circle cx="30" cy="22.5" r="1.4" fill="K" stroke="none"/><ellipse cx="24" cy="33" rx="3.8" ry="4.6" fill="W"/>'
+};
+var ICOL = {P:'#F7B5C9', L:'#CDB8F0', S:'#A9D3F5', M:'#A8E2CC', B:'#FFE08A', C:'#FFC3AE', W:'#FFFFFF', K:'#3E3A5B'};
+function ic(name, size, extra){
+  var body = ICONS[name];
+  if(!body){ return '<span class="ic-txt">' + esc(name || '') + '</span>'; }
+  body = body.replace(/fill="([A-Z])"/g, function(m0, k){ return 'fill="' + (ICOL[k] || k) + '"'; });
+  return '<svg class="ic' + (extra ? ' ' + extra : '') + '" width="' + (size || 40) + '" height="' + (size || 40) + '" viewBox="0 0 48 48" aria-hidden="true" focusable="false">' +
+    '<g fill="none" stroke="#3E3A5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + body + '</g></svg>';
+}
+
+
+/* ---------- Encodage du lien collège (UTF-8 <-> base64) ---------- */
+function b64enc(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64dec(str){ return decodeURIComponent(escape(atob(str))); }
+function cleanCfg(c){
+  if(!c || typeof c !== 'object' || !c.contacts || !c.contacts.length){ return null; }
+  var out = {etablissement: String(c.etablissement || '').slice(0, 80), contacts: []};
+  for(var i=0;i<c.contacts.length && i<12;i++){
+    var x = c.contacts[i] || {};
+    out.contacts.push({emoji:String(x.emoji || 'heart').slice(0, 12), role:String(x.role || '').slice(0, 60), nom:String(x.nom || '').slice(0, 60), lieu:String(x.lieu || '').slice(0, 60)});
+  }
+  return out;
+}
+
+/* ---------- Configuration : URL ?c= > appareil > fichier ---------- */
+var CFG = CFG0;
+try{
+  var stored = localStorage.getItem(KEYCFG);
+  if(stored){ var sc0 = cleanCfg(JSON.parse(stored)); if(sc0){ CFG = sc0; } }
+}catch(e){}
+try{
+  var m = /[?&]c=([^&#]+)/.exec(window.location.search);
+  if(m){
+    var fromUrl = cleanCfg(JSON.parse(b64dec(decodeURIComponent(m[1]))));
+    if(fromUrl){ CFG = fromUrl; try{ localStorage.setItem(KEYCFG, JSON.stringify(CFG)); }catch(e2){} }
+  }
+}catch(e){}
+
+/* ---------- Progression (aucune donnée personnelle) ---------- */
+function blank(){ return {done:{}, scen:{}, shield:{}, m5act:{}, charte:{}, dys:false, niveau:'', m1best:0, m3best:0}; }
+var S = blank();
+try{
+  var raw = localStorage.getItem(KEY) || localStorage.getItem('lephare_eleve_v1');
+  if(raw){ var p = JSON.parse(raw); for(var k in S){ if(S.hasOwnProperty(k) && p.hasOwnProperty(k)){ S[k] = p[k]; } } }
+}catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+/* ---------- État de session ---------- */
+var ui = {view:'home', m1i:0, m1score:0, m1ans:null, scen:null, scenPick:null,
+  m3i:0, m3score:0, m3ans:null, net:'Snapchat', m3mode:null, m5tab:'meteo', mood:null,
+  mc:{a:'', b:'', c:''}, plan:{}, plan3018:false, replan:false, emp:{}, reset:false,
+  openSeance:-1, pscen:0, pvotes:[0,0,0,0], preveal:false, psort:0, psortReveal:false,
+  draft:null, link:''};
+var breathTimer = null;
+
+/* ---------- Utilitaires ---------- */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function countDone(){ var n = 0; for(var i=0;i<D.modules.length;i++){ if(S.done[D.modules[i].id]){ n++; } } return n; }
+function lumens(){
+  var t = 0;
+  for(var i=0;i<D.scenarios.length;i++){ var sc = D.scenarios[i], pk = S.scen[sc.id]; if(pk !== undefined && pk !== null){ t += sc.choices[pk].v; } }
+  return t;
+}
+var toastT = null;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show';
+  if(toastT){ clearTimeout(toastT); }
+  toastT = setTimeout(function(){ t.className = 'toast'; }, 2400);
+}
+function finishModule(id){
+  if(!S.done[id]){
+    S.done[id] = true; save();
+    var n = countDone();
+    toast(n === 5 ? 'Le Phare brille de tous ses feux !' : 'Un nouveau rayon s’allume (' + n + '/5)');
+  }
+}
+function modById(id){ for(var i=0;i<D.modules.length;i++){ if(D.modules[i].id === id){ return D.modules[i]; } } return null; }
+function sayBtn(id, inline){
+  if(!CAN_SPEAK){ return ''; }
+  return '<button class="say' + (inline ? ' inline' : '') + '" data-act="say" data-arg="' + id + '" aria-label="Écouter le texte">' + ic('speaker', 24) + '</button>';
+}
+function youngLevel(){ return S.niveau === '6e' || S.niveau === '5e'; }
+
+/* ---------- Lecture à voix haute ---------- */
+var speakingBtn = null;
+function stopSpeak(){
+  if(CAN_SPEAK){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+  if(speakingBtn){ speakingBtn.className = speakingBtn.className.replace(' speaking', ''); speakingBtn = null; }
+}
+function speak(id, btn){
+  if(!CAN_SPEAK){ return; }
+  var was = speakingBtn === btn;
+  stopSpeak();
+  if(was){ return; }
+  var el = document.getElementById(id);
+  if(!el){ return; }
+  var txt = (el.innerText || el.textContent || '');
+  txt = txt.replace(/[\uD800-\uDFFF]|[-]||/g, ' ').replace(/«|»/g, '').replace(/\s+/g, ' ');
+  var u = new window.SpeechSynthesisUtterance(txt);
+  u.lang = 'fr-FR'; u.rate = 0.95;
+  try{
+    var vs = window.speechSynthesis.getVoices();
+    for(var i=0;i<vs.length;i++){ if(vs[i].lang && vs[i].lang.toLowerCase().indexOf('fr') === 0){ u.voice = vs[i]; break; } }
+  }catch(e){}
+  u.onend = function(){ if(speakingBtn === btn){ stopSpeak(); } };
+  speakingBtn = btn; btn.className += ' speaking';
+  window.speechSynthesis.speak(u);
+}
+
+/* ---------- Le phare (SVG) ---------- */
+function lighthouse(){
+  var rays = ['100,60 0,14 0,46','100,60 0,62 0,96','100,60 200,14 200,46','100,60 200,62 200,96','100,60 82,0 118,0'];
+  var s = '<svg class="lh" viewBox="0 0 200 230" role="img" aria-label="Phare avec ' + countDone() + ' rayons allumés sur 5">';
+  s += '<defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#FFDB6E"/><stop offset="1" stop-color="#FFF4CC"/></linearGradient>';
+  s += '<linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9D3F5"/><stop offset="1" stop-color="#CDB8F0"/></linearGradient></defs>';
+  s += '<g class="stars" fill="#fff"><circle cx="22" cy="118" r="2"/><circle cx="178" cy="122" r="2.2"/><circle cx="40" cy="146" r="1.6"/><circle cx="164" cy="150" r="1.6"/></g>';
+  for(var i=0;i<rays.length;i++){ s += '<polygon class="ray ' + (S.done[D.modules[i].id] ? 'on' : 'off') + '" points="' + rays[i] + '" fill="url(#rg)"/>'; }
+  s += '<polygon points="86,74 114,74 124,184 76,184" fill="#FFFFFF" stroke="#E8DDF8" stroke-width="1.5"/>';
+  s += '<polygon points="83.6,98 116.4,98 117.8,113 82.2,113" fill="#F7B5C9"/><polygon points="80.7,130 119.3,130 120.7,145 79.3,145" fill="#F7B5C9"/><polygon points="77.9,162 122.1,162 123.6,178 76.4,178" fill="#F7B5C9"/>';
+  s += '<rect x="80" y="68" width="40" height="7" rx="3" fill="#B9A3EC"/><rect x="89" y="46" width="22" height="22" rx="4" fill="#FFF3C4" stroke="#B9A3EC" stroke-width="2.5"/>';
+  s += '<circle class="lantern-glow" cx="100" cy="57" r="' + (6 + countDone() * 1.6) + '" fill="#FFD970"/>';
+  s += '<polygon points="84,47 116,47 100,30" fill="#F4A3C0"/><circle cx="100" cy="28" r="3" fill="#B9A3EC"/>';
+  s += '<rect x="94" y="164" width="12" height="20" rx="6" fill="#B9A3EC"/><circle cx="100" cy="120" r="4.5" fill="#CFE6FA" stroke="#B9A3EC" stroke-width="1.5"/>';
+  s += '<ellipse cx="100" cy="188" rx="64" ry="12" fill="#D9CDEF"/>';
+  s += '<path d="M0 198 Q 25 188 50 198 T 100 198 T 150 198 T 200 198 V230 H0 Z" fill="url(#sea)"/>';
+  s += '<path d="M0 210 Q 25 202 50 210 T 100 210 T 150 210 T 200 210" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/></svg>';
+  return s;
+}
+
+/* =================== VUES ÉLÈVE =================== */
+function vHome(){
+  var n = countDone();
+  var h = '<section class="hero fade">' + lighthouse();
+  h += '<h1>Le Phare</h1><p class="tag">Ensemble, on éclaire. Personne ne reste dans l’ombre.</p>';
+  if(CFG.etablissement){ h += '<p class="tag" style="font-size:14px">' + esc(CFG.etablissement) + '</p>'; }
+  h += '<div class="progress-pill"><span class="dots">';
+  for(var i=0;i<5;i++){ h += '<i class="' + (S.done[D.modules[i].id] ? 'on' : '') + '"></i>'; }
+  h += '</span>' + n + '/5 rayons · ' + lumens() + ' éclats</div>';
+  h += '<div style="margin-top:12px;font-weight:800;font-size:14.5px">Je suis en :</div><div class="levelpick">';
+  var lv = ['6e','5e','4e','3e'];
+  for(var l=0;l<lv.length;l++){ h += '<button class="chip' + (S.niveau === lv[l] ? ' sel' : '') + '" data-act="niveau" data-arg="' + lv[l] + '">' + lv[l] + '</button>'; }
+  h += '</div></section>';
+
+  h += '<h2 class="section-title">Les 5 îles du Phare</h2><div class="grid">';
+  for(var j=0;j<D.modules.length;j++){
+    var md = D.modules[j];
+    h += '<button class="isle ' + md.c + ' fade" data-act="go" data-arg="' + md.id + '">';
+    if(S.done[md.id]){ h += '<span class="check">Allumé</span>'; }
+    h += '<span class="ico" aria-hidden="true">' + ic(md.ico, 44) + '</span><span><span class="num">' + md.n + '</span><h3>' + esc(md.title) + '</h3><p>' + esc(md.sub) + '</p></span></button>';
+  }
+  h += '</div>';
+  if(n === 5){
+    h += '<div class="final fade"><span class="emoji-big">' + ic('star', 52) + '</span><h3>Les cinq rayons brillent</h3><p>Il te reste une étape : ta charte.</p><button class="btn" data-act="go" data-arg="charte">Signer ma charte</button></div>';
+  } else {
+    h += '<div class="card tint-butter fade" style="text-align:center"><b>Chaque île terminée allume un rayon du phare.</b><br><span style="color:var(--muted);font-weight:600">Tu peux les faire dans l’ordre que tu veux.' + (CAN_SPEAK ? ' Touche le haut-parleur pour écouter les textes.' : '') + '</span></div>';
+  }
+  h += '<div class="foot">Le Phare · programme pHARe<br>Aucune donnée personnelle n’est enregistrée : seulement ta progression, sur cet appareil.';
+  h += '<div class="settings"><button class="chip' + (S.dys ? ' sel' : '') + '" data-act="dys">Aa Lecture facilitée</button>';
+  h += '<button class="chip" data-act="askreset">↺ Effacer ma progression</button>';
+  h += '<button class="chip" data-act="go" data-arg="prof">Espace prof</button></div>';
+  if(ui.reset){ h += '<div class="confirmbox">Tout effacer et éteindre le phare ?<div class="row" style="margin-top:10px"><button class="btn soft" data-act="noreset">Annuler</button><button class="btn" data-act="doreset">Oui, effacer</button></div></div>'; }
+  h += '<p style="margin-top:14px">Une appli BROT2YOU</p></div>';
+  return h;
+}
+
+function mHead(id, extra){
+  var md = modById(id);
+  return '<header class="mhead ' + md.tint + ' fade"><button class="back" data-act="home">← Retour au phare</button><h2 class="hic">' + ic(md.ico, 44) + '<span>' + esc(md.title) + '</span></h2><p>' + esc(extra || md.sub) + '</p></header>';
+}
+function infoCard(c, id){
+  var h = '<div class="card ' + c.tint + ' fade" id="' + id + '">' + sayBtn(id) + '<span class="emoji-big">' + ic(c.emoji, 48) + '</span><h3>' + esc(c.title) + '</h3>';
+  if(c.signs){
+    h += '<div class="signs">';
+    for(var j=0;j<c.signs.length;j++){ h += '<div class="sign"><b>' + ic(c.signs[j][0], 44) + '</b>' + esc(c.signs[j][1]) + '<div style="font-weight:600;font-size:14px;color:var(--muted)">' + esc(c.signs[j][2]) + '</div></div>'; }
+    h += '</div>';
+  } else { h += c.html; }
+  return h + '</div>';
+}
+
+function vM1(){
+  var h = mHead('m1', 'Lis ou écoute les cartes, puis entraîne-toi à reconnaître les situations.');
+  for(var i=0;i<D.m1cards.length;i++){ h += infoCard(D.m1cards[i], 'c1-' + i); }
+  h += '<h2 class="section-title" id="tri">Le grand tri</h2>';
+  var total = D.m1sort.length;
+  if(ui.m1i >= total){
+    h += '<div class="card tint-mint" style="text-align:center"><span class="emoji-big">' + ic('trophy', 52) + '</span><h3 style="padding:0">' + ui.m1score + '/' + total + '</h3>';
+    h += '<p>' + (ui.m1score >= 7 ? 'Excellent, tu sais faire la différence !' : ui.m1score >= 5 ? 'Bien joué ! Relis les 3 signes pour ne plus hésiter.' : 'Pas facile ! Relis les cartes et retente ta chance.') + '</p>';
+    h += '<div class="row"><button class="btn soft" data-act="m1again">Recommencer</button><button class="btn" data-act="home">Retour au phare</button></div></div>';
+    return h;
+  }
+  var it = D.m1sort[ui.m1i];
+  h += '<div class="counter">Situation ' + (ui.m1i + 1) + ' / ' + total + '</div><div class="bar"><i style="width:' + Math.round(ui.m1i / total * 100) + '%"></i></div>';
+  h += '<div class="sortcard fade"><span id="sortt">' + esc(it.t) + '</span>' + sayBtn('sortt') + '</div>';
+  if(ui.m1ans === null){
+    h += '<div class="bins"><button class="btn bin-a" data-act="m1pick" data-arg="0">Pas du harcèlement</button><button class="btn bin-b" data-act="m1pick" data-arg="1">Harcèlement</button></div>';
+  } else {
+    var ok = ui.m1ans === it.a;
+    h += '<div class="fb ' + (ok ? 'good' : 'bad') + ' fade"><b>' + (ok ? 'Bien vu !' : 'Pas tout à fait…') + '</b>' + esc(it.e) + '</div>';
+    h += '<button class="btn wide" data-act="m1next">' + (ui.m1i + 1 < total ? 'Situation suivante →' : 'Voir mon score') + '</button>';
+  }
+  return h;
+}
+
+function perspLabel(p){ return p === 'victime' ? 'Tu es la cible' : p === 'suiveur' ? 'Tu as suivi' : 'Tu es témoin'; }
+function vM2(){
+  var h = mHead('m2');
+  var answered = 0;
+  for(var k=0;k<D.scenarios.length;k++){ if(S.scen[D.scenarios[k].id] !== undefined){ answered++; } }
+  h += '<div class="card tint-butter" style="text-align:center"><b>' + lumens() + ' / ' + (D.scenarios.length * 3) + ' éclats de lumière</b><br><span style="font-weight:600;color:var(--muted)">' + answered + ' / ' + D.scenarios.length + ' situations vécues · les réactions les plus protectrices rapportent le plus d’éclats</span></div>';
+  h += '<div class="grid scen-list">';
+  for(var i=0;i<D.scenarios.length;i++){
+    var sc = D.scenarios[i], pk = S.scen[sc.id];
+    h += '<button class="isle c2 fade" data-act="scen" data-arg="' + i + '">';
+    if(pk !== undefined){ h += '<span class="check">' + (sc.choices[pk].v === 3 ? '+3' : '+' + sc.choices[pk].v) + '</span>'; }
+    h += '<span class="ico" aria-hidden="true">' + ic(sc.ico, 38) + '</span><span><span class="num">' + perspLabel(sc.persp) + '</span><h3>' + esc(sc.title) + '</h3></span></button>';
+  }
+  return h + '</div>';
+}
+function vScen(){
+  var sc = D.scenarios[ui.scen];
+  var h = '<header class="mhead tint-peach fade"><button class="back" data-act="go" data-arg="m2">← Les situations</button><h2 class="hic">' + ic(sc.ico, 44) + '<span>' + esc(sc.title) + '</span></h2></header>';
+  h += '<span class="persp p-' + sc.persp + '">' + perspLabel(sc.persp) + '</span>';
+  h += '<div id="scenebox"><div class="scene fade">' + esc(sc.text) + sayBtn('scenebox') + '</div>';
+  h += '<p style="font-weight:800;margin:4px 2px">Que fais-tu ?</p>';
+  var picked = ui.scenPick;
+  for(var i=0;i<sc.choices.length;i++){
+    var ch = sc.choices[i], cls = 'choice';
+    if(picked !== null){ if(ch.v === 3){ cls += ' best'; } else if(i === picked){ cls += (ch.v >= 1 ? ' mid' : ' bad'); } else { cls += ' dim'; } }
+    h += '<button class="' + cls + '" data-act="spick" data-arg="' + i + '"' + (picked !== null ? ' disabled' : '') + '>' + esc(ch.t) + '</button>';
+  }
+  h += '</div>';
+  if(picked !== null){
+    var c = sc.choices[picked];
+    var kind = c.v === 3 ? 'good' : c.v >= 1 ? 'mid' : 'bad';
+    var title = c.v === 3 ? 'Réaction protectrice : +3 éclats' : c.v === 2 ? 'Bon réflexe : +2 éclats' : c.v === 1 ? 'C’est un début : +1 éclat' : 'Prends le temps d’y repenser';
+    h += '<div class="fb ' + kind + ' fade" id="fbx"><b>' + title + '</b>' + esc(c.fb) + ' ' + sayBtn('fbx', true) + '</div>';
+    if(c.v !== 3){ for(var j=0;j<sc.choices.length;j++){ if(sc.choices[j].v === 3){ h += '<div class="fb good"><b>La réaction la plus protectrice</b>' + esc(sc.choices[j].fb) + '</div>'; } } }
+    h += '<div class="row"><button class="btn soft" data-act="sretry">Rejouer</button>';
+    h += ui.scen + 1 < D.scenarios.length ? '<button class="btn" data-act="scen" data-arg="' + (ui.scen + 1) + '">Situation suivante →</button>' : '<button class="btn" data-act="go" data-arg="m2">Terminer</button>';
+    h += '</div>';
+  }
+  return h;
+}
+
+function vM3(){
+  var h = mHead('m3');
+  var mode = ui.m3mode || (youngLevel() ? 'sans' : 'avec');
+  h += '<div class="seg" role="tablist"><button class="' + (mode === 'avec' ? 'sel' : '') + '" data-act="m3mode" data-arg="avec">J’ai des comptes</button><button class="' + (mode === 'sans' ? 'sel' : '') + '" data-act="m3mode" data-arg="sans">Pas encore de compte</button></div>';
+  h += '<h2 class="section-title">Les 6 réflexes</h2><div class="gestes" id="gestes">';
+  for(var i=0;i<D.gestes.length;i++){ var g = D.gestes[i]; h += '<div class="geste fade"><h3>' + ic(g.e, 34) + esc(g.t) + '</h3><p>' + esc(g.d) + '</p></div>'; }
+  h += '</div><div style="text-align:right;margin-top:6px">' + (CAN_SPEAK ? '<span style="font-weight:700;font-size:14px;color:var(--muted)">Écouter les réflexes</span>' + sayBtn('gestes', true) : '') + '</div>';
+
+  if(mode === 'sans'){
+    h += '<h2 class="section-title">Avant mon premier compte</h2>';
+    for(var a=0;a<D.avantCompte.length;a++){ h += infoCard(D.avantCompte[a], 'ac-' + a); }
+  } else {
+    h += '<h2 class="section-title">Mon bouclier</h2><div class="card tint-lav"><p style="margin-top:0;font-weight:600">Coche ce que tu as déjà réglé. Ton bouclier se renforce à chaque case.</p>';
+    var all = 0, on = 0, nets = [];
+    for(var n in D.shield){ if(D.shield.hasOwnProperty(n)){ nets.push(n); for(var b=0;b<D.shield[n].length;b++){ all++; if(S.shield[n + '|' + b]){ on++; } } } }
+    h += '<div class="shieldmeter">' + on + ' / ' + all + '<div class="bar" style="flex:1"><i style="width:' + Math.round(on / all * 100) + '%"></i></div></div><div class="netbtns">';
+    for(var x=0;x<nets.length;x++){ h += '<button class="chip' + (ui.net === nets[x] ? ' sel' : '') + '" data-act="net" data-arg="' + esc(nets[x]) + '">' + esc(nets[x]) + '</button>'; }
+    h += '</div>';
+    var items = D.shield[ui.net];
+    for(var y=0;y<items.length;y++){
+      var key = ui.net + '|' + y, isOn = !!S.shield[key];
+      h += '<button class="tog' + (isOn ? ' on' : '') + '" data-act="shield" data-arg="' + esc(key) + '" aria-pressed="' + isOn + '"><span class="box">' + (isOn ? '✓' : '') + '</span>' + esc(items[y]) + '</button>';
+    }
+    h += '<p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:0">Les menus changent souvent : cherche ces options dans « Paramètres » puis « Confidentialité ».</p></div>';
+  }
+
+  h += '<h2 class="section-title" id="quiz">Vrai ou faux ?</h2>';
+  var total = D.m3quiz.length;
+  if(ui.m3i >= total){
+    h += '<div class="card tint-mint" style="text-align:center"><span class="emoji-big">' + ic('shield', 52) + '</span><h3 style="padding:0">' + ui.m3score + '/' + total + '</h3><p>' + (ui.m3score >= 5 ? 'Ton bouclier numérique est solide !' : 'Relis les 6 réflexes et retente le quiz.') + '</p>';
+    h += '<div class="row"><button class="btn soft" data-act="m3again">Recommencer</button><button class="btn" data-act="home">Retour au phare</button></div></div>';
+    return h;
+  }
+  var q = D.m3quiz[ui.m3i];
+  h += '<div class="counter">Question ' + (ui.m3i + 1) + ' / ' + total + '</div><div class="bar"><i style="width:' + Math.round(ui.m3i / total * 100) + '%"></i></div>';
+  h += '<div class="sortcard fade"><span id="qt">' + esc(q.t) + '</span>' + sayBtn('qt') + '</div>';
+  if(ui.m3ans === null){
+    h += '<div class="bins"><button class="btn bin-a" data-act="m3pick" data-arg="1">Vrai</button><button class="btn bin-b" data-act="m3pick" data-arg="0">Faux</button></div>';
+  } else {
+    var ok = ui.m3ans === q.a;
+    h += '<div class="fb ' + (ok ? 'good' : 'bad') + ' fade"><b>' + (ok ? 'Exact !' : 'Raté…') + '</b>' + esc(q.e) + '</div>';
+    h += '<button class="btn wide" data-act="m3next">' + (ui.m3i + 1 < total ? 'Question suivante →' : 'Voir mon score') + '</button>';
+  }
+  return h;
+}
+
+function vM4(){
+  var h = mHead('m4');
+  h += '<div class="card tint-butter fade" id="balancer">' + sayBtn('balancer') + '<p class="quote">Parler, ce n’est pas balancer.</p>';
+  h += '<p><b>Balancer</b>, c’est chercher à nuire à quelqu’un.<br><b>Alerter</b>, c’est chercher à protéger quelqu’un.</p>';
+  h += '<p style="margin-bottom:0">Tu peux demander à l’adulte d’être discret sur ton nom. Et si c’est toi qui es visé : <b>ce n’est jamais de ta faute.</b></p></div>';
+  h += '<h2 class="section-title">Au collège, ils peuvent t’aider</h2><div class="contacts">';
+  for(var i=0;i<CFG.contacts.length;i++){
+    var c = CFG.contacts[i];
+    h += '<div class="contact fade"><b>' + ic(c.emoji, 40) + '</b>' + esc(c.role);
+    if(c.nom){ h += '<span style="color:var(--ink);font-weight:800">' + esc(c.nom) + '</span>'; }
+    if(c.lieu){ h += '<span>' + esc(c.lieu) + '</span>'; }
+    h += '</div>';
+  }
+  h += '</div>';
+  h += '<div class="card tint-pink fade" style="margin-top:16px"><h3>En dehors du collège</h3><p><b>3018</b> : gratuit, anonyme et confidentiel, 7 jours sur 7 de 9 h à 23 h, par téléphone, tchat ou appli. Il peut aussi aider à faire supprimer des contenus en ligne.</p><button class="btn" data-act="help">Voir tous les numéros</button></div>';
+  h += '<h2 class="section-title">Comment commencer ?</h2><div class="card tint-sky" id="phr">' + sayBtn('phr') + '<p style="margin-top:0;font-weight:600;padding-right:44px">Le plus dur, c’est la première phrase. Tu peux prendre l’une de celles-ci :</p><ul class="soft">';
+  for(var j=0;j<D.phrases.length;j++){ h += '<li>' + esc(D.phrases[j]) + '</li>'; }
+  h += '</ul></div>';
+  h += '<h2 class="section-title">Si c’est un ami ou une amie qui vit ça</h2><div class="card tint-mint" id="ami">' + sayBtn('ami') + '<ul class="soft" style="margin-right:44px">';
+  for(var k=0;k<D.ami.length;k++){ h += '<li>' + esc(D.ami[k]) + '</li>'; }
+  h += '</ul></div>';
+  h += '<h2 class="section-title">Mon plan d’alerte</h2><div class="card tint-lav">';
+  if(S.done.m4 && !ui.replan){
+    h += '<p style="margin:0;font-weight:700">Ton plan est prêt. Tu sais vers qui te tourner, pour toi ou pour quelqu’un d’autre.</p><button class="btn soft" style="margin-top:12px" data-act="replan">Refaire mon plan</button>';
+  } else {
+    h += '<p style="margin-top:0;font-weight:600">Choisis au moins <b>2 personnes</b> vers qui tu irais en premier. (Ton choix n’est enregistré nulle part.)</p><div class="netbtns">';
+    var nb = 0;
+    for(var p=0;p<CFG.contacts.length;p++){
+      if(ui.plan[p]){ nb++; }
+      h += '<button class="chip' + (ui.plan[p] ? ' sel' : '') + '" data-act="plan" data-arg="' + p + '">' + esc(CFG.contacts[p].role) + '</button>';
+    }
+    h += '</div><button class="tog' + (ui.plan3018 ? ' on' : '') + '" data-act="plan3018"><span class="box">' + (ui.plan3018 ? '✓' : '') + '</span>Je connais le 3018 et je sais qu’il est gratuit et confidentiel.</button>';
+    h += '<button class="btn wide" data-act="planok"' + (nb >= 2 && ui.plan3018 ? '' : ' disabled') + '>Mon plan est prêt </button>';
+  }
+  return h + '</div>';
+}
+
+function m5count(){ var nb = 0; for(var x in S.m5act){ if(S.m5act.hasOwnProperty(x) && S.m5act[x]){ nb++; } } return nb; }
+function m5countText(){ return m5count() + ' / 4 activités essayées' + (S.done.m5 ? ' · rayon allumé ' : ' · 3 suffisent pour allumer le rayon'); }
+function vM5(){
+  var h = mHead('m5');
+  var tabs = [['meteo','Météo intérieure'],['respire','Respire'],['message','Message clair'],['place','À sa place']];
+  h += '<div class="counter" id="m5count">' + m5countText() + '</div><div class="tabs" role="tablist">';
+  for(var i=0;i<tabs.length;i++){ h += '<button role="tab" id="tab-' + tabs[i][0] + '" class="chip' + (ui.m5tab === tabs[i][0] ? ' sel' : '') + '" data-act="tab" data-arg="' + tabs[i][0] + '">' + tabs[i][1] + (S.m5act[tabs[i][0]] ? ' ✓' : '') + '</button>'; }
+  h += '</div>';
+  if(ui.m5tab === 'meteo'){
+    h += '<div class="card tint-pink fade"><h3>Qu’est-ce que tu ressens, là, maintenant ?</h3><p style="font-weight:600;color:var(--muted);margin-top:0">Ta réponse n’est enregistrée nulle part.</p><div class="moods">';
+    for(var m=0;m<D.moods.length;m++){ h += '<button class="mood' + (ui.mood === m ? ' sel' : '') + '" data-act="mood" data-arg="' + m + '"><b>' + ic(D.moods[m].e, 46) + '</b>' + esc(D.moods[m].t) + '</button>'; }
+    h += '</div>';
+    if(ui.mood !== null){
+      var md = D.moods[ui.mood];
+      h += '<div class="reveal fade" id="moodr"><p style="margin-top:0">' + esc(md.m) + ' ' + sayBtn('moodr', true) + '</p><ul class="soft">';
+      for(var x=0;x<md.i.length;x++){ h += '<li>' + esc(md.i[x]) + '</li>'; }
+      h += '</ul>';
+      if(md.heavy){ h += '<p style="margin-bottom:0;font-size:15px">Si c’est très lourd, tu n’as pas à attendre : parles-en aujourd’hui à un adulte ou appelle le <b>3018</b>. Si tu as des idées de mort, appelle le <b>3114</b>, à toute heure.</p>'; }
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+  if(ui.m5tab === 'respire'){
+    h += '<div class="card tint-sky fade" style="text-align:center"><h3 style="padding:0">La respiration du Phare</h3><p style="font-weight:600">Inspire quand la bulle grandit, expire quand elle rapetisse. Six fois, environ une minute.</p>';
+    h += '<div class="breath-zone"><div class="bubble" id="bubble">On y va ?</div><p class="counter" id="bcount" style="margin-top:14px">&nbsp;</p></div><button class="btn" id="bbtn" data-act="breath">▶ Commencer</button></div>';
+  }
+  if(ui.m5tab === 'message'){
+    h += '<div class="card tint-lav fade"><h3>Le message clair</h3><p style="margin-top:0;font-weight:600">Pour dire à quelqu’un que son comportement te blesse, sans attaquer. On parle de ce qu’on ressent, pas de ce que l’autre « est ».</p>';
+    h += '<label class="lbl" for="mca">1. Quand tu… (ce qui s’est passé, précisément)</label><input class="field" id="mca" maxlength="120" placeholder="te moques de mon accent devant la classe" value="' + esc(ui.mc.a) + '" autocomplete="off">';
+    h += '<span class="lbl">2. je ressens…</span><div class="netbtns">';
+    for(var f=0;f<D.feelings.length;f++){ h += '<button class="chip' + (ui.mc.b === D.feelings[f] ? ' sel' : '') + '" data-act="feel" data-arg="' + esc(D.feelings[f]) + '">' + esc(D.feelings[f]) + '</button>'; }
+    h += '</div><label class="lbl" for="mcc">3. J’aimerais que tu… (ce que tu demandes)</label><input class="field" id="mcc" maxlength="120" placeholder="arrêtes de le faire" value="' + esc(ui.mc.c) + '" autocomplete="off">';
+    h += '<p class="lbl" style="margin-bottom:4px">Ton message : ' + sayBtn('mcout', true) + '</p><div class="msgout" id="mcout">' + esc(mcText()) + '</div>';
+    h += '<p style="font-size:14px;color:var(--muted);font-weight:600">Rien n’est enregistré. Si la personne continue après un message clair, ce n’est plus à toi de gérer : va voir un adulte.</p></div>';
+  }
+  if(ui.m5tab === 'place'){
+    h += '<div class="card tint-mint fade"><h3>Mets-toi à sa place</h3><p style="margin-top:0;font-weight:600">Lis la situation. Imagine ce que ressent la personne et ce que tu pourrais faire. Puis découvre une piste.</p></div>';
+    for(var e=0;e<D.empathie.length;e++){
+      var em = D.empathie[e];
+      h += '<div class="card fade" id="emp' + e + '">' + sayBtn('emp' + e) + '<p style="margin-top:0;font-weight:700;padding-right:44px">' + esc(em.t) + '</p>';
+      h += ui.emp[e] ? '<div class="reveal">' + esc(em.r) + '</div>' : '<button class="btn soft" data-act="emp" data-arg="' + e + '">J’ai réfléchi, je découvre </button>';
+      h += '</div>';
+    }
+  }
+  return h;
+}
+function trim(s){ return s.replace(/^\s+|\s+$/g, ''); }
+function mcText(){
+  var a = trim(ui.mc.a), b = ui.mc.b, c = trim(ui.mc.c);
+  if(!a && !b && !c){ return '…'; }
+  return 'Quand tu ' + (a || '…') + ', je ressens ' + (b || '…') + '. J’aimerais que tu ' + (c || '…') + '.';
+}
+
+function vCharte(){
+  var h = '<header class="mhead tint-butter fade"><button class="back" data-act="home">← Retour au phare</button><h2>Ma charte du Phare</h2><p>Touche chaque engagement que tu fais tien.</p></header>';
+  var nb = 0;
+  for(var i=0;i<D.charte.length;i++){
+    var on = !!S.charte[i]; if(on){ nb++; }
+    h += '<button class="tog' + (on ? ' on' : '') + '" data-act="charte" data-arg="' + i + '" aria-pressed="' + on + '"><span class="box">' + (on ? '✓' : '') + '</span>' + esc(D.charte[i]) + '</button>';
+  }
+  if(nb === D.charte.length){ h += '<div class="final fade">' + lighthouse() + '<h3>Merci, tu fais partie de l’équipe du Phare</h3><p>Tu as ' + lumens() + ' éclats de lumière. Un seul geste peut sortir quelqu’un de l’ombre.</p></div>'; }
+  return h;
+}
+
+/* =================== ESPACE PROF =================== */
+function pHead(title, sub, backTo){
+  return '<header class="mhead tint-lav fade"><button class="back" data-act="go" data-arg="' + (backTo || 'prof') + '">← ' + (backTo === 'home' ? 'Retour élèves' : 'Espace prof') + '</button>' +
+    '<div style="margin-top:12px"><span class="profbadge">Espace prof</span></div><h2 style="margin-top:6px">' + title + '</h2>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '</header>';
+}
+function listCards(arr){
+  var h = '';
+  for(var i=0;i<arr.length;i++){
+    h += '<div class="card ' + arr[i].tint + ' fade"><h3 style="padding:0">' + esc(arr[i].t) + '</h3><ul class="soft">';
+    for(var j=0;j<arr[i].l.length;j++){ h += '<li>' + esc(arr[i].l[j]) + '</li>'; }
+    h += '</ul></div>';
+  }
+  return h;
+}
+function vProf(){
+  var h = pHead('Espace prof', 'Tout ce qu’il faut pour utiliser Le Phare en classe dans le cadre des 10 heures pHARe.', 'home');
+  var tiles = [
+    ['pseances','c1','calendar','10 séances clé en main','Objectifs, déroulés minutés, traces écrites.'],
+    ['pproj','c2','screen','Mode projection','Situations et grand tri en classe entière, avec vote.'],
+    ['pconf','c5','ear','Si un élève se confie','Les bons gestes, ce qu’il faut éviter, les urgences.'],
+    ['pcfg','c4','school','Mon collège','Noms et lieux des personnes ressources, lien à partager.'],
+    ['ppres','c6','megaphone','Présenter l’appli','Le discours en 5 minutes et les points d’attention.'],
+    ['pfam','c1','heart','Pour les familles','Un texte prêt à transmettre aux parents.'],
+    ['pres','c3','link','Ressources','3018, pHARe, e-Enfance, Pix, questionnaire.']
+  ];
+  h += '<div class="grid" style="margin-top:14px">';
+  for(var i=0;i<tiles.length;i++){ var t = tiles[i]; h += '<button class="isle ' + t[1] + ' fade" data-act="go" data-arg="' + t[0] + '"><span class="ico" aria-hidden="true">' + ic(t[2], 42) + '</span><span><h3>' + esc(t[3]) + '</h3><p>' + esc(t[4]) + '</p></span></button>'; }
+  h += '</div><div class="card tint-butter" style="margin-top:16px"><b>Confidentialité :</b> l’appli ne collecte aucune donnée sur les élèves. Ni compte, ni serveur, ni suivi : la progression reste sur l’appareil de chaque élève.</div>';
+  return h;
+}
+function vSeances(){
+  var h = pHead('10 séances clé en main', 'Environ 55 minutes chacune, adaptables de la 6e à la 3e. Elles peuvent aussi être coupées en demi-séances.');
+  for(var i=0;i<D.seances.length;i++){
+    var s = D.seances[i], open = ui.openSeance === i;
+    h += '<div class="seance fade"><button data-act="seance" data-arg="' + i + '" aria-expanded="' + open + '"><span class="sn">' + (i + 1) + '</span><span style="flex:1"><h3>' + esc(s.t) + '</h3><small>' + esc(s.ile) + ' · ' + esc(s.cps) + '</small></span><span aria-hidden="true">' + (open ? '▲' : '▼') + '</span></button>';
+    if(open){
+      h += '<div class="body"><p class="kv"><b>Objectif :</b> ' + esc(s.obj) + '</p><p class="kv"><b>Matériel :</b> ' + esc(s.mat) + '</p><ul class="steps">';
+      for(var j=0;j<s.deroule.length;j++){ h += '<li><b>' + esc(s.deroule[j][0]) + '</b><span>' + esc(s.deroule[j][1]) + '</span></li>'; }
+      h += '</ul><p class="kv"><b>Trace :</b> ' + esc(s.trace) + '</p>';
+      if(s.plus){ h += '<p class="kv"><b>Prolongement :</b> ' + esc(s.plus) + '</p>'; }
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+  return h;
+}
+function vProjMenu(){
+  var h = pHead('Mode projection', 'À afficher au tableau. Les élèves votent à main levée, vous comptez les mains, puis vous révélez.');
+  h += '<button class="isle c1 fade" style="margin:14px 0" data-act="psortgo"><span class="ico">' + ic('scales', 42) + '</span><span><h3>Le grand tri</h3><p>8 situations : harcèlement ou pas ?</p></span></button>';
+  h += '<h2 class="section-title">Les situations</h2><div class="grid scen-list">';
+  for(var i=0;i<D.scenarios.length;i++){ var sc = D.scenarios[i]; h += '<button class="isle c2 fade" data-act="pscen" data-arg="' + i + '"><span class="ico">' + ic(sc.ico, 38) + '</span><span><span class="num">Situation ' + (i + 1) + '</span><h3>' + esc(sc.title) + '</h3></span></button>'; }
+  return h + '</div>';
+}
+function vProjScen(){
+  var sc = D.scenarios[ui.pscen], L = ['A','B','C','D'];
+  var h = '<div class="row" style="align-items:center"><button class="back" data-act="go" data-arg="pproj">← Projection</button><span style="flex:1"></span><span class="persp p-' + sc.persp + '">' + perspLabel(sc.persp) + '</span></div>';
+  h += '<div class="pscene fade">' + ic(sc.ico, 56, 'pic') + esc(sc.text) + '</div><div class="popts">';
+  var tot = 0; for(var t=0;t<4;t++){ tot += ui.pvotes[t]; }
+  for(var i=0;i<sc.choices.length;i++){
+    var c = sc.choices[i], cls = 'popt';
+    if(ui.preveal){ cls += c.v === 3 ? ' best' : c.v >= 1 ? ' mid' : ' bad'; }
+    h += '<div class="' + cls + '"><span class="L">' + L[i] + '</span><div class="tx">' + esc(c.t);
+    if(ui.preveal){ h += '<span class="fbp">' + (c.v === 3 ? '' : c.v === 2 ? '' : c.v === 1 ? '' : '') + esc(c.fb) + '</span>'; }
+    h += '<div class="vote"><button data-act="pvote" data-arg="' + i + '|-1" aria-label="Retirer un vote">−</button><span>' + ui.pvotes[i] + '</span><button data-act="pvote" data-arg="' + i + '|1" aria-label="Ajouter un vote">+</button>';
+    if(tot){ h += '<span style="font-size:16px;color:var(--muted);min-width:0">' + Math.round(ui.pvotes[i] / tot * 100) + ' %</span>'; }
+    h += '</div></div></div>';
+  }
+  h += '</div>';
+  if(!ui.preveal){ h += '<button class="btn wide" style="margin-top:16px;font-size:20px" data-act="preveal">Révéler les réponses</button>'; }
+  else {
+    h += '<div class="qbox fade"><b>Pour débattre</b><ul>';
+    for(var q=0;q<sc.q.length;q++){ h += '<li>' + esc(sc.q[q]) + '</li>'; }
+    h += '</ul></div>';
+  }
+  h += '<div class="row" style="margin-top:16px">' + (ui.pscen > 0 ? '<button class="btn soft" data-act="pscen" data-arg="' + (ui.pscen - 1) + '">← Précédente</button>' : '') + (ui.pscen + 1 < D.scenarios.length ? '<button class="btn" data-act="pscen" data-arg="' + (ui.pscen + 1) + '">Situation suivante →</button>' : '') + '</div>';
+  return h;
+}
+function vProjSort(){
+  var it = D.m1sort[ui.psort];
+  var h = '<div class="row" style="align-items:center"><button class="back" data-act="go" data-arg="pproj">← Projection</button><span style="flex:1"></span><span class="counter">Situation ' + (ui.psort + 1) + ' / ' + D.m1sort.length + '</span></div>';
+  h += '<p style="text-align:center;font-weight:800;font-size:24px;margin:16px 0 8px">Pas du harcèlement ou harcèlement ?</p>';
+  h += '<div class="psort fade">' + esc(it.t) + '</div>';
+  if(ui.psortReveal){ h += '<div class="fb ' + (it.a ? 'bad' : 'good') + ' fade" style="font-size:22px"><b style="font-size:26px">' + (it.a ? 'Harcèlement' : 'Pas du harcèlement') + '</b>' + esc(it.e) + '</div>'; }
+  else { h += '<button class="btn wide" style="margin-top:16px;font-size:20px" data-act="psortrev">Révéler</button>'; }
+  h += '<div class="row" style="margin-top:16px">' + (ui.psort > 0 ? '<button class="btn soft" data-act="psortnav" data-arg="-1">← Précédente</button>' : '') + (ui.psort + 1 < D.m1sort.length ? '<button class="btn" data-act="psortnav" data-arg="1">Suivante →</button>' : '') + '</div>';
+  return h;
+}
+function vConf(){
+  return pHead('Si un élève se confie', 'Repères issus du programme pHARe. Le protocole précis de votre établissement prime.') + listCards(D.confidence);
+}
+function vPres(){ return pHead('Présenter l’appli', '') + listCards(D.presenter); }
+function vFam(){
+  var F = D.familles;
+  var h = pHead('Pour les familles', 'À copier dans l’ENT, Pronote ou un mot aux parents. Pensez à ajouter le lien du collège.');
+  h += '<div class="card fade" id="famtxt"><h3 style="padding:0">' + esc(F.titre) + '</h3>';
+  for(var i=0;i<F.blocs.length;i++){
+    h += '<p style="font-weight:800;margin-top:14px">' + esc(F.blocs[i].t) + '</p><ul class="soft">';
+    for(var j=0;j<F.blocs[i].l.length;j++){ h += '<li>' + esc(F.blocs[i].l[j]) + '</li>'; }
+    h += '</ul>';
+  }
+  h += '</div><button class="btn wide" data-act="copytext" data-arg="famtxt">Copier le texte</button>';
+  h += '<p class="warn" style="margin-top:12px">pHARe prévoit aussi un atelier de sensibilisation pour les familles : ce texte peut servir de support.</p>';
+  return h;
+}
+function vRes(){
+  var h = pHead('Ressources', 'Liens officiels et partenaires.');
+  for(var i=0;i<D.ressources.length;i++){ var r = D.ressources[i]; h += '<a class="card fade" style="display:block;text-decoration:none" href="' + esc(r.u) + '" target="_blank" rel="noopener"><h3 style="padding:0">' + esc(r.t) + ' ↗</h3><p>' + esc(r.d) + '</p><p style="font-size:13px;color:var(--muted);word-break:break-all">' + esc(r.u) + '</p></a>'; }
+  h += '<div class="card tint-butter"><b>Temps forts de l’année :</b><ul class="soft"><li>Journée nationale Non au harcèlement : le premier jeudi qui suit les vacances d’automne, avec la passation du questionnaire d’auto-évaluation anonyme</li><li>Safer Internet Day : en février</li><li>Prix « Non au harcèlement » : tout au long de l’année</li></ul></div>';
+  return h;
+}
+function vCfg(){
+  if(!ui.draft){ ui.draft = JSON.parse(JSON.stringify(CFG)); }
+  var d = ui.draft;
+  var h = pHead('Mon collège', 'Indiquez les noms et les lieux de vos personnes ressources. Ils apparaîtront dans l’Île 4 et dans « Besoin d’aide ? ».');
+  h += '<div class="card"><label class="lbl" for="cfg-etab">Nom de l’établissement (facultatif)</label><input class="field" id="cfg-etab" data-cfg="etab" maxlength="80" value="' + esc(d.etablissement) + '" placeholder="Collège …">';
+  for(var i=0;i<d.contacts.length;i++){
+    var c = d.contacts[i];
+    h += '<div class="cfgrow"><b class="hic sm">' + ic(c.emoji, 26) + '<span>' + esc(c.role) + '</span></b><div class="two"><input class="field" data-cfg="nom|' + i + '" maxlength="60" placeholder="Nom (facultatif)" value="' + esc(c.nom) + '"><input class="field" data-cfg="lieu|' + i + '" maxlength="60" placeholder="Lieu ou horaires" value="' + esc(c.lieu) + '"></div></div>';
+  }
+  h += '<div class="row" style="margin-top:10px"><button class="btn soft" data-act="cfgreset">Revenir au modèle</button><button class="btn" data-act="cfgsave">Enregistrer</button></div></div>';
+  h += '<div class="card tint-mint"><h3 style="padding:0">Le lien de votre collège</h3><p>« Enregistrer » ne modifie que <b>cet appareil</b>. Pour que tous les élèves voient vos contacts, partagez le lien ci-dessous : il contient la configuration et l’applique à l’ouverture.</p>';
+  h += '<button class="btn wide" data-act="cfglink">Créer le lien</button>';
+  if(ui.link){
+    h += '<textarea class="field" id="linkbox" readonly>' + esc(ui.link) + '</textarea><button class="btn soft wide" data-act="copylink">Copier le lien</button>';
+    h += '<p class="warn" style="margin-top:10px">Le lien ne fonctionne qu’une fois l’appli en ligne (GitHub Pages ou ENT). Ne mettez que des noms et lieux professionnels : le lien est visible par toute personne qui le reçoit.</p>';
+  }
+  return h + '</div>';
+}
+
+/* =================== AIDE =================== */
+function helpHTML(){
+  var h = '<div class="grab"></div><h2 style="font-size:28px;text-align:center;margin-bottom:4px">On est là pour t’aider </h2>';
+  h += '<p style="text-align:center;font-weight:600;color:var(--muted);margin-top:0">Ce qui t’arrive n’est pas de ta faute. Des personnes sont là pour toi.</p>';
+  h += '<a class="big3018" href="tel:3018"><b>3018</b><span>Harcèlement et cyberharcèlement · gratuit, anonyme, confidentiel<br>7 jours sur 7, de 9 h à 23 h · appel, tchat ou appli</span></a>';
+  h += '<p style="text-align:center;margin:8px 0 2px;font-weight:700"><a href="https://www.3018.fr" target="_blank" rel="noopener">3018.fr</a> pour tchatter ou télécharger l’appli 3018</p>';
+  h += '<h3 style="margin:18px 0 4px;font-size:20px">En cas de danger</h3><div class="numlist">';
+  h += '<a href="tel:17"><span class="n tint-pink">17</span><span>Police ou gendarmerie<small>Danger immédiat, menace, agression</small></span></a>';
+  h += '<a href="tel:112"><span class="n tint-pink">112</span><span>Urgences européennes<small>Depuis n’importe quel téléphone</small></span></a>';
+  h += '<a href="sms:114"><span class="n tint-pink">114</span><span>Urgences par SMS<small>Si tu ne peux pas parler</small></span></a>';
+  h += '<a href="tel:3114"><span class="n tint-lav">3114</span><span>Prévention du suicide<small>Si tu as des idées de mort · 24 h/24, gratuit</small></span></a>';
+  h += '<a href="tel:119"><span class="n tint-sky">119</span><span>Enfance en danger<small>Violences, maltraitance · 24 h/24, gratuit</small></span></a></div>';
+  h += '<h3 style="margin:18px 0 4px;font-size:20px">Au collège</h3><div class="numlist">';
+  for(var i=0;i<CFG.contacts.length;i++){ var c = CFG.contacts[i]; h += '<div><span class="n tint-mint">' + ic(c.emoji, 30) + '</span><span>' + esc(c.role) + (c.nom ? ' · ' + esc(c.nom) : '') + '<small>' + esc(c.lieu || '') + '</small></span></div>'; }
+  return h + '</div><button class="btn wide soft" style="margin-top:12px" data-act="closehelp">Fermer</button>';
+}
+
+/* =================== RESPIRATION =================== */
+function stopBreath(){ if(breathTimer){ clearInterval(breathTimer); breathTimer = null; } }
+function startBreath(){
+  stopBreath();
+  var b = document.getElementById('bubble'), cnt = document.getElementById('bcount'), btn = document.getElementById('bbtn');
+  if(!b){ return; }
+  var phase = 0, cycles = 6;
+  btn.disabled = true;
+  function step(){
+    if(phase >= cycles * 2){
+      stopBreath(); b.className = 'bubble'; b.textContent = 'Bravo ';
+      cnt.textContent = 'Une minute rien que pour toi.'; btn.disabled = false; btn.textContent = '↺ Recommencer';
+      markAct('respire'); return;
+    }
+    if(phase % 2 === 0){ b.className = 'bubble in'; b.textContent = 'Inspire…'; } else { b.className = 'bubble'; b.textContent = 'Expire…'; }
+    cnt.textContent = 'Respiration ' + (Math.floor(phase / 2) + 1) + ' / ' + cycles;
+    phase++;
+  }
+  step();
+  breathTimer = setInterval(step, 5000);
+}
+function markAct(k){
+  if(!S.m5act[k]){
+    S.m5act[k] = true; save();
+    if(m5count() >= 3 && !S.done.m5){ finishModule('m5'); }
+    var c = document.getElementById('m5count'); if(c){ c.textContent = m5countText(); }
+    var tb = document.getElementById('tab-' + k); if(tb && tb.textContent.indexOf('✓') < 0){ tb.textContent = tb.textContent + ' ✓'; }
+  }
+}
+function checkMessage(){ if(ui.mc.a.replace(/\s/g, '').length >= 3 && ui.mc.b && ui.mc.c.replace(/\s/g, '').length >= 3){ markAct('message'); } }
+
+/* =================== RENDU =================== */
+var PROF_VIEWS = {pfam:1, prof:1, pseances:1, pproj:1, pscen:1, psort:1, pconf:1, pcfg:1, ppres:1, pres:1};
+function applyBody(){
+  var cls = [];
+  if(S.dys){ cls.push('dys'); }
+  if(ui.view === 'pscen' || ui.view === 'psort'){ cls.push('proj'); }
+  if(PROF_VIEWS[ui.view]){ cls.push('profmode'); }
+  document.body.className = cls.join(' ');
+}
+function render(keepScroll){
+  if(ui.view !== 'm5' || ui.m5tab !== 'respire'){ stopBreath(); }
+  stopSpeak();
+  var y = window.pageYOffset, v = ui.view, h = '';
+  if(v === 'home'){ h = vHome(); } else if(v === 'm1'){ h = vM1(); } else if(v === 'm2'){ h = vM2(); }
+  else if(v === 'scen'){ h = vScen(); } else if(v === 'm3'){ h = vM3(); } else if(v === 'm4'){ h = vM4(); }
+  else if(v === 'm5'){ h = vM5(); } else if(v === 'charte'){ h = vCharte(); }
+  else if(v === 'prof'){ h = vProf(); } else if(v === 'pseances'){ h = vSeances(); } else if(v === 'pproj'){ h = vProjMenu(); }
+  else if(v === 'pscen'){ h = vProjScen(); } else if(v === 'psort'){ h = vProjSort(); } else if(v === 'pconf'){ h = vConf(); }
+  else if(v === 'pcfg'){ h = vCfg(); } else if(v === 'ppres'){ h = vPres(); } else if(v === 'pres'){ h = vRes(); } else if(v === 'pfam'){ h = vFam(); }
+  applyBody();
+  app.innerHTML = h;
+  window.scrollTo(0, keepScroll ? y : 0);
+}
+function go(v){ ui.view = v; ui.reset = false; render(false); }
+function scrollToId(id){ var el = document.getElementById(id); if(el && el.scrollIntoView){ el.scrollIntoView({behavior:'smooth', block:'start'}); } }
+function baseUrl(){ return window.location.href.split('#')[0].split('?')[0]; }
+
+/* =================== ACTIONS =================== */
+function act(a, arg, el){
+  if(a === 'exit'){ try{ window.location.replace('https://www.google.fr/search?q=m%C3%A9t%C3%A9o'); }catch(e){ window.location.href = 'https://www.google.fr'; } return; }
+  if(a === 'help'){ stopSpeak(); document.getElementById('helpSheet').innerHTML = helpHTML(); document.getElementById('help').className = 'overlay show'; return; }
+  if(a === 'closehelp'){ document.getElementById('help').className = 'overlay'; return; }
+  if(a === 'say'){ speak(arg, el); return; }
+  if(a === 'home'){ go('home'); return; }
+  if(a === 'go'){ if(arg === 'm1'){ ui.m1ans = null; } if(arg === 'm3'){ ui.m3ans = null; } if(arg === 'pcfg'){ ui.draft = null; ui.link = ''; } go(arg); return; }
+  if(a === 'niveau'){ S.niveau = S.niveau === arg ? '' : arg; ui.m3mode = null; save(); render(true); return; }
+  if(a === 'dys'){ S.dys = !S.dys; save(); render(true); return; }
+  if(a === 'askreset'){ ui.reset = true; render(true); return; }
+  if(a === 'noreset'){ ui.reset = false; render(true); return; }
+  if(a === 'doreset'){
+    var d = S.dys, nv = S.niveau; S = blank(); S.dys = d; S.niveau = nv; save();
+    ui.reset = false; ui.m1i = 0; ui.m1score = 0; ui.m3i = 0; ui.m3score = 0; ui.plan = {}; ui.plan3018 = false; ui.emp = {};
+    toast('Progression effacée'); render(false); return;
+  }
+  /* Île 1 */
+  if(a === 'm1pick'){ ui.m1ans = parseInt(arg, 10); if(ui.m1ans === D.m1sort[ui.m1i].a){ ui.m1score++; } render(true); return; }
+  if(a === 'm1next'){
+    ui.m1i++; ui.m1ans = null;
+    if(ui.m1i >= D.m1sort.length){ if(ui.m1score > S.m1best){ S.m1best = ui.m1score; save(); } finishModule('m1'); }
+    render(true); scrollToId('tri'); return;
+  }
+  if(a === 'm1again'){ ui.m1i = 0; ui.m1score = 0; ui.m1ans = null; render(true); scrollToId('tri'); return; }
+  /* Île 2 */
+  if(a === 'scen'){ ui.scen = parseInt(arg, 10); var sc = D.scenarios[ui.scen]; ui.scenPick = S.scen[sc.id] !== undefined ? S.scen[sc.id] : null; go('scen'); return; }
+  if(a === 'spick'){
+    if(ui.scenPick !== null){ return; }
+    var sc2 = D.scenarios[ui.scen];
+    ui.scenPick = parseInt(arg, 10);
+    var prev = S.scen[sc2.id];
+    if(prev === undefined || sc2.choices[ui.scenPick].v >= sc2.choices[prev].v){ S.scen[sc2.id] = ui.scenPick; }
+    save();
+    var all = true; for(var i=0;i<D.scenarios.length;i++){ if(S.scen[D.scenarios[i].id] === undefined){ all = false; } }
+    if(all){ finishModule('m2'); }
+    render(true);
+    var fbx = document.getElementById('fbx'); if(fbx && fbx.scrollIntoView){ fbx.scrollIntoView({behavior:'smooth', block:'center'}); }
+    return;
+  }
+  if(a === 'sretry'){ ui.scenPick = null; render(true); return; }
+  /* Île 3 */
+  if(a === 'm3mode'){ ui.m3mode = arg; render(true); return; }
+  if(a === 'net'){ ui.net = arg; render(true); return; }
+  if(a === 'shield'){ S.shield[arg] = !S.shield[arg]; save(); render(true); return; }
+  if(a === 'm3pick'){ ui.m3ans = arg === '1'; if(ui.m3ans === D.m3quiz[ui.m3i].a){ ui.m3score++; } render(true); return; }
+  if(a === 'm3next'){
+    ui.m3i++; ui.m3ans = null;
+    if(ui.m3i >= D.m3quiz.length){ if(ui.m3score > S.m3best){ S.m3best = ui.m3score; save(); } finishModule('m3'); }
+    render(true); scrollToId('quiz'); return;
+  }
+  if(a === 'm3again'){ ui.m3i = 0; ui.m3score = 0; ui.m3ans = null; render(true); scrollToId('quiz'); return; }
+  /* Île 4 */
+  if(a === 'plan'){ ui.plan[arg] = !ui.plan[arg]; render(true); return; }
+  if(a === 'plan3018'){ ui.plan3018 = !ui.plan3018; render(true); return; }
+  if(a === 'planok'){ ui.replan = false; if(S.done.m4){ toast('Plan prêt !'); } else { finishModule('m4'); } render(true); return; }
+  if(a === 'replan'){ ui.plan = {}; ui.plan3018 = false; ui.replan = true; render(true); return; }
+  /* Île 5 */
+  if(a === 'tab'){ ui.m5tab = arg; render(true); return; }
+  if(a === 'mood'){ ui.mood = parseInt(arg, 10); markAct('meteo'); render(true); return; }
+  if(a === 'breath'){ startBreath(); return; }
+  if(a === 'feel'){ ui.mc.b = arg; render(true); checkMessage(); return; }
+  if(a === 'emp'){
+    ui.emp[arg] = true;
+    var n = 0; for(var e in ui.emp){ if(ui.emp.hasOwnProperty(e)){ n++; } }
+    if(n >= D.empathie.length){ markAct('place'); }
+    render(true); return;
+  }
+  /* Charte */
+  if(a === 'charte'){
+    S.charte[arg] = !S.charte[arg]; save();
+    var cc = 0; for(var k=0;k<D.charte.length;k++){ if(S.charte[k]){ cc++; } }
+    if(cc === D.charte.length && S.charte[arg]){ toast('Charte signée. Merci !'); }
+    render(true); return;
+  }
+  /* Prof */
+  if(a === 'seance'){ var si = parseInt(arg, 10); ui.openSeance = ui.openSeance === si ? -1 : si; render(true); return; }
+  if(a === 'pscen'){ ui.pscen = parseInt(arg, 10); ui.pvotes = [0,0,0,0]; ui.preveal = false; go('pscen'); return; }
+  if(a === 'pvote'){ var pa = arg.split('|'), ix = parseInt(pa[0], 10); ui.pvotes[ix] = Math.max(0, ui.pvotes[ix] + parseInt(pa[1], 10)); render(true); return; }
+  if(a === 'preveal'){ ui.preveal = true; render(true); return; }
+  if(a === 'psortgo'){ ui.psort = 0; ui.psortReveal = false; go('psort'); return; }
+  if(a === 'psortrev'){ ui.psortReveal = true; render(true); return; }
+  if(a === 'psortnav'){ ui.psort += parseInt(arg, 10); ui.psortReveal = false; render(false); return; }
+  if(a === 'cfgsave'){
+    CFG = cleanCfg(ui.draft);
+    try{ localStorage.setItem(KEYCFG, JSON.stringify(CFG)); toast('Enregistré sur cet appareil'); }catch(e){ toast('Enregistrement impossible sur ce navigateur'); }
+    return;
+  }
+  if(a === 'cfgreset'){
+    ui.draft = JSON.parse(JSON.stringify(CFG0)); CFG = CFG0; ui.link = '';
+    try{ localStorage.removeItem(KEYCFG); }catch(e){}
+    toast('Modèle rétabli'); render(true); return;
+  }
+  if(a === 'cfglink'){ ui.link = baseUrl() + '?c=' + encodeURIComponent(b64enc(JSON.stringify(cleanCfg(ui.draft)))); render(true); return; }
+  if(a === 'copytext'){
+    var src = document.getElementById(arg);
+    var txt = '';
+    if(src){
+      var parts = [];
+      var nodes = src.querySelectorAll('h3, p, li');
+      for(var q=0;q<nodes.length;q++){ parts.push((nodes[q].tagName === 'LI' ? '- ' : (nodes[q].tagName === 'H3' ? '' : '\n')) + (nodes[q].innerText || nodes[q].textContent)); }
+      txt = parts.join('\n');
+    }
+    var ok = function(){ toast('Texte copié'); };
+    var ko = function(){ toast('Sélectionnez le texte et copiez-le'); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok, ko); } else { ko(); }
+    return;
+  }
+  if(a === 'copylink'){
+    var box = document.getElementById('linkbox');
+    var done = function(){ toast('Lien copié'); };
+    var fallback = function(){ try{ box.focus(); box.select(); box.setSelectionRange(0, 99999); if(document.execCommand('copy')){ done(); } else { toast('Sélectionnez le lien et copiez-le'); } }catch(e){ toast('Sélectionnez le lien et copiez-le'); } };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(ui.link).then(done, fallback); } else { fallback(); }
+    return;
+  }
+}
+
+/* =================== ÉCOUTEURS =================== */
+document.addEventListener('click', function(e){
+  var el = e.target;
+  while(el && el.nodeType === 1 && !el.getAttribute('data-act')){ el = el.parentNode; }
+  if(!el || el.nodeType !== 1 || el.disabled){ return; }
+  act(el.getAttribute('data-act'), el.getAttribute('data-arg'), el);
+});
+document.getElementById('help').addEventListener('click', function(e){ if(e.target === this){ this.className = 'overlay'; } });
+document.addEventListener('input', function(e){
+  var t = e.target;
+  if(t.id === 'mca' || t.id === 'mcc'){
+    if(t.id === 'mca'){ ui.mc.a = t.value; } else { ui.mc.c = t.value; }
+    var out = document.getElementById('mcout'); if(out){ out.textContent = mcText(); }
+    checkMessage(); return;
+  }
+  var key = t.getAttribute && t.getAttribute('data-cfg');
+  if(key && ui.draft){
+    if(key === 'etab'){ ui.draft.etablissement = t.value; }
+    else { var pp = key.split('|'); ui.draft.contacts[parseInt(pp[1], 10)][pp[0]] = t.value; }
+    ui.link = ''; var lb = document.getElementById('linkbox'); if(lb){ lb.value = 'Configuration modifiée : recréez le lien.'; }
+  }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' || e.keyCode === 27){ document.getElementById('help').className = 'overlay'; }
+  if((ui.view === 'pscen' || ui.view === 'psort') && (e.keyCode === 39 || e.keyCode === 37)){
+    var dir = e.keyCode === 39 ? 1 : -1;
+    if(ui.view === 'pscen'){ var ni = ui.pscen + dir; if(ni >= 0 && ni < D.scenarios.length){ act('pscen', String(ni)); } }
+    else { var nj = ui.psort + dir; if(nj >= 0 && nj < D.m1sort.length){ act('psortnav', String(dir)); } }
+  }
+});
+if(CAN_SPEAK){ try{ window.speechSynthesis.getVoices(); }catch(e){} }
+
+render(false);
+})();
+</script>
+</body>
+</html>
